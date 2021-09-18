@@ -11,10 +11,11 @@ export default class Mail {
 
     constructor() { }
 
-    public async sendMail(correoDestinatario: string, plantilla: string): Promise<void> {
+    public async sendMail(correoDestinatario: string, plantilla: string): Promise<any> {
 
         const transporter = nodemailer.createTransport({
             service: EMAIL_CONFIG.service,
+            secure: EMAIL_CONFIG.secure,
             auth: {
                 user: EMAIL_CONFIG.auth.user,
                 pass: EMAIL_CONFIG.auth.pass // naturally, replace both with your real credentials or an application-specific password
@@ -44,6 +45,7 @@ export default class Mail {
                 console.log('correo enviado correctamente');
             }
         });
+
 
     }
 

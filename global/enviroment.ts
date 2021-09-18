@@ -10,8 +10,8 @@ export const DATABASE: DatabaseModel = {
 export const EMAIL_CONFIG = {
     service: 'gmail',
     host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
         user: 'mariojosueitq@gmail.com',
         pass: 'Madarasusanox1$'

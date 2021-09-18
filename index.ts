@@ -3,12 +3,9 @@ import Server from "./classes/server";
 // Enviroment
 import { SERVER_PORT } from "./global/enviroment";
 // Routes
-// Route Autenticacion 
 import autenticacionRouter from "./routes/autenticacion-route";
-// Route Usuarios
 import usuariosRouter from "./routes/usuarios-route";
-// Connection
-import Connection from "./classes/connection";
+import categoriasRouter from "./routes/categorias-route";
 // Body Parser
 import bodyParser from 'body-parser';
 // Cors
@@ -27,6 +24,8 @@ server.app.use(cors({credentials: false, origin: '*', methods: ['GET','POST','DE
 server.app.use('/autenticacion', autenticacionRouter);
 // Usuarios Routes
 server.app.use('/usuarios', usuariosRouter);
+// Categorias Routes
+server.app.use('/categorias', categoriasRouter);
 
 // Inicio de servidor
 server.start(() => {

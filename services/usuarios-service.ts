@@ -1,3 +1,4 @@
+import { PLANTILLAS_CORREO } from './../global/constants';
 // Connection DB
 import { Request, Response } from "express";
 import { Collection } from "mongodb";
@@ -7,6 +8,7 @@ import Connection from "../classes/connection";
 import { DATABASE } from "../global/enviroment";
 // Models
 import { AltaUsuarioModel } from "../models/usuarios/registro-model";
+import Mail from "../utils/mail";
 import { UsuarioCuentaModel } from './../models/usuarios/usuarioCuenta-model';
 
 export default class UsuariosService {
@@ -39,7 +41,15 @@ export default class UsuariosService {
             // Realiza la insercion en la coleccion de usuarios
             await quotesCollection.insertOne(altaUsuario);
             try {
-                res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
+                // Inicializa Correo
+                const mail = new Mail();
+                // Envia el email al usuario registrado
+                await mail.sendMail(altaUsuario.correo, PLANTILLAS_CORREO.registro).then(email => {
+                    res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
+                }).catch(error => {
+                    console.log(error.message);
+                    res.status(200).send({ status: 'NOK', message: `Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la dirección de correo ${altaUsuario.correo}` });
+                });
             } catch (error) {
                 res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos' });
             } finally {

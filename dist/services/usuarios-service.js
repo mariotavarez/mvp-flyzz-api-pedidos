@@ -39,10 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var constants_1 = require("./../global/constants");
 // Connection Database
 var connection_1 = __importDefault(require("../classes/connection"));
 // Database
 var enviroment_1 = require("../global/enviroment");
+var mail_1 = __importDefault(require("../utils/mail"));
 var UsuariosService = /** @class */ (function () {
     function UsuariosService() {
     }
@@ -55,7 +57,7 @@ var UsuariosService = /** @class */ (function () {
     */
     UsuariosService.prototype.altaUsuario = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var altaUsuario, connection, database, quotesCollection, idRepeated;
+            var altaUsuario, connection, database, quotesCollection, idRepeated, mail, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -71,26 +73,39 @@ var UsuariosService = /** @class */ (function () {
                         return [4 /*yield*/, this.validarExistenciaCorreo(altaUsuario.correo, quotesCollection)];
                     case 2:
                         idRepeated = _a.sent();
-                        if (!!idRepeated) return [3 /*break*/, 4];
+                        if (!!idRepeated) return [3 /*break*/, 9];
                         // Realiza la insercion en la coleccion de usuarios
                         return [4 /*yield*/, quotesCollection.insertOne(altaUsuario)];
                     case 3:
                         // Realiza la insercion en la coleccion de usuarios
                         _a.sent();
-                        try {
-                            res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
-                        }
-                        catch (error) {
-                            res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos' });
-                        }
-                        finally {
-                            connection.client.close();
-                        }
-                        return [3 /*break*/, 5];
+                        _a.label = 4;
                     case 4:
+                        _a.trys.push([4, 6, 7, 8]);
+                        mail = new mail_1.default();
+                        // Envia el email al usuario registrado
+                        return [4 /*yield*/, mail.sendMail(altaUsuario.correo, constants_1.PLANTILLAS_CORREO.registro).then(function (email) {
+                                res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
+                            }).catch(function (error) {
+                                console.log(error.message);
+                                res.status(200).send({ status: 'NOK', message: "Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la direcci\u00F3n de correo " + altaUsuario.correo });
+                            })];
+                    case 5:
+                        // Envia el email al usuario registrado
+                        _a.sent();
+                        return [3 /*break*/, 8];
+                    case 6:
+                        error_1 = _a.sent();
+                        res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos' });
+                        return [3 /*break*/, 8];
+                    case 7:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 8: return [3 /*break*/, 10];
+                    case 9:
                         res.status(200).send({ status: 'NOK', message: "El correo " + altaUsuario.correo + " ya se ha dado de alta anteriormente, intente con uno diferente" });
-                        _a.label = 5;
-                    case 5: return [2 /*return*/];
+                        _a.label = 10;
+                    case 10: return [2 /*return*/];
                 }
             });
         });

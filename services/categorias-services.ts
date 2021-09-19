@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { Collection } from 'mongodb';
 // Connection
 import Connection from "../classes/connection";
-import { DATABASE } from "../global/enviroment";
+import { COLLECTIONS, DATABASE } from "../global/enviroment";
 
 export default class CategoriasService {
 
@@ -23,7 +23,7 @@ export default class CategoriasService {
         // Database
         const database = connection.client.db(DATABASE.dbName);
         // Collecion
-        const quotesCollection = database.collection('categorias');
+        const quotesCollection = database.collection(COLLECTIONS.categorias);
         // Si no esta repetido entonces registra la cuenta del usuario
             // Realiza la insercion en la coleccion de usuarios
             const categorias: Collection<any> | any = await quotesCollection.find({}).toArray();

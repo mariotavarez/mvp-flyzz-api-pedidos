@@ -10,19 +10,18 @@ export default class AutenticacionController {
     /**
      * @author Mario Tavarez
      * @date 16/09/2021
+     * @description Autentica el usuario por medio del correo y el password
      * @param req 
      * @param res 
      * @returns 
      */
-    public autenticarUsuario(req: Request, res: Response) {
-
-        const autenticacion: AutenticacionModel = req.body;
-
+    public async autenticarUsuario(req: Request, res: Response) {
+        // Inicializa el servicio de autenticacion
         const autenticacionService = new AutenticacionService();
-
-        autenticacionService.autenticarUsuario(req);
-
-        return res.json({ok: true, mensaje: autenticacion});
+        // Invoca el servicio de autenticacion de usuarios
+        const responseAutenticarUsuario = await autenticacionService.autenticarUsuario(req, res);
+        // Devuelve el response de autenticacion de usuarios
+        return responseAutenticarUsuario;
     }
 
 }

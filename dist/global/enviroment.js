@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMAIL_CONFIG = exports.DATABASE = exports.SERVER_PORT = void 0;
+exports.TOKEN = exports.COLLECTIONS = exports.EMAIL_CONFIG = exports.DATABASE = exports.SERVER_PORT = void 0;
 // SERVER PORT
 exports.SERVER_PORT = 4201;
 // DATABASE CONFIG
@@ -8,7 +8,7 @@ exports.DATABASE = {
     url: 'mongodb+srv://admin-flyzz:flyzzmvp2021@cluster0.pj7fl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     dbName: 'flyzz-mvp'
 };
-// Email Config
+// EMAIL CONFIG
 exports.EMAIL_CONFIG = {
     service: 'gmail',
     host: 'smtp.gmail.com',
@@ -19,3 +19,11 @@ exports.EMAIL_CONFIG = {
         pass: 'wbuukhfawsiwlhyn'
     }
 };
+// COLLECTIONS
+exports.COLLECTIONS = {
+    usuarios: 'usuarios',
+    productos: 'productos',
+    categorias: 'categorias'
+};
+// TOKEN
+exports.TOKEN = '229b6c3219d07afacaf781ffda3beddc0b1ee1a5e9c34b82c050dc9e0b0ea9d097e892e504df38d38440cb97b47b207c32606945e3f0b2d59566f9f0432491ca3096b381f07cefa540b8ae6a2001e51c';

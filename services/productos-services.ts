@@ -3,7 +3,7 @@ import { Collection } from 'mongodb';
 // Connection
 import Connection from "../classes/connection";
 // Enviroment
-import { DATABASE } from "../global/enviroment";
+import { COLLECTIONS, DATABASE } from "../global/enviroment";
 
 export default class ProductosService {
 
@@ -24,7 +24,7 @@ export default class ProductosService {
         // Database
         const database = connection.client.db(DATABASE.dbName);
         // Collecion
-        const quotesCollection = database.collection('productos');
+        const quotesCollection = database.collection(COLLECTIONS.productos);
         // Devuelve todos los productos disponibles
         const productos: Collection<any> | any = await quotesCollection.find({}).toArray();
         try {
@@ -60,7 +60,7 @@ export default class ProductosService {
         // Id Categoria
         const {idCategoria} = req.params;
         // Collecion
-        const quotesCollection = database.collection('productos');
+        const quotesCollection = database.collection(COLLECTIONS.productos);
 
         console.log();
         

@@ -20,7 +20,7 @@ export default class CategoriasController {
 
         const categoriasService = new CategoriasService();
 
-        const responseCategorias = categoriasService.getCategorias(res);
+        const responseCategorias = await categoriasService.getCategorias(res);
 
         return responseCategorias;
 

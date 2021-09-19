@@ -20,7 +20,7 @@ export default class ProductosController {
 
         const productosService = new ProductosService();
 
-        const responseProductosService = productosService.getProductos(res);
+        const responseProductosService = await productosService.getProductos(res);
 
         return responseProductosService;
 
@@ -37,7 +37,7 @@ export default class ProductosController {
 
         const productosService = new ProductosService();
 
-        const responseProductosServiceByCategoria = productosService.getProductosByCategoria(req, res);
+        const responseProductosServiceByCategoria = await productosService.getProductosByCategoria(req, res);
 
         return responseProductosServiceByCategoria;
 

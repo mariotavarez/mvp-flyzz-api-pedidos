@@ -10,6 +10,7 @@ import { DATABASE } from "../global/enviroment";
 import { AltaUsuarioModel } from "../models/usuarios/registro-model";
 import Mail from "../utils/mail";
 import { UsuarioCuentaModel } from '../models/usuarios/usuarioCuenta-model';
+import Security from '../classes/security';
 
 export default class UsuariosService {
 
@@ -38,6 +39,10 @@ export default class UsuariosService {
         const idRepeated: boolean = await this.validarExistenciaCorreo(altaUsuario.correo, quotesCollection);
         // Si no esta repetido entonces registra la cuenta del usuario
         if (!idRepeated) {
+            // Instancia de la clase de Security
+            const security = new Security();
+            // Generacion de nuevo password
+            altaUsuario.password = await security.encryptPassword(altaUsuario.password);
             // Realiza la insercion en la coleccion de usuarios
             await quotesCollection.insertOne(altaUsuario);
             try {

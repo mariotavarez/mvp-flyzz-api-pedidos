@@ -10,6 +10,7 @@ import { COLLECTIONS, DATABASE } from './../global/enviroment';
 import { AutenticacionModel } from '../models/autenticacion/autenticacion-model';
 // Token
 import Token from '../middlewares/token';
+import Security from '../classes/security';
 
 
 export default class AutenticacionService {
@@ -41,8 +42,12 @@ export default class AutenticacionService {
         try {
             // Valida si existen productos registrados
             if (usuario) {
+                // Instancia de la clase security
+                const security = new Security();
+                // Valida si el password del usuario coincide con el password hasheado
+                const passwordCorrect = await security.decryptPassword(autenticacion.password, usuario.password);
                 // Valida si la contraseña es correcta
-                if ( usuario.password === autenticacion.password ) {
+                if ( passwordCorrect ) {
                     // Inicializar clase Token
                     const token = new Token();
                     // Generar token de usuario

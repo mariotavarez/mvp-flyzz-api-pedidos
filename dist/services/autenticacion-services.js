@@ -45,6 +45,7 @@ var connection_1 = __importDefault(require("../classes/connection"));
 var enviroment_1 = require("./../global/enviroment");
 // Token
 var token_1 = __importDefault(require("../middlewares/token"));
+var security_1 = __importDefault(require("../classes/security"));
 var AutenticacionService = /** @class */ (function () {
     function AutenticacionService() {
     }
@@ -57,7 +58,7 @@ var AutenticacionService = /** @class */ (function () {
      */
     AutenticacionService.prototype.autenticarUsuario = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, database, autenticacion, quotesCollection, usuario, token, tokenGenerate, error_1;
+            var connection, database, autenticacion, quotesCollection, usuario, security, passwordCorrect, token, tokenGenerate, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -75,32 +76,36 @@ var AutenticacionService = /** @class */ (function () {
                         usuario = _a.sent();
                         _a.label = 3;
                     case 3:
-                        _a.trys.push([3, 9, 10, 11]);
-                        if (!usuario) return [3 /*break*/, 7];
-                        if (!(usuario.password === autenticacion.password)) return [3 /*break*/, 5];
+                        _a.trys.push([3, 10, 11, 12]);
+                        if (!usuario) return [3 /*break*/, 8];
+                        security = new security_1.default();
+                        return [4 /*yield*/, security.decryptPassword(autenticacion.password, usuario.password)];
+                    case 4:
+                        passwordCorrect = _a.sent();
+                        if (!passwordCorrect) return [3 /*break*/, 6];
                         token = new token_1.default();
                         return [4 /*yield*/, token.generateToken(autenticacion)];
-                    case 4:
+                    case 5:
                         tokenGenerate = _a.sent();
                         // Enviar token de usuario
                         res.status(200).send({ status: 'OK', message: 'Credenciales correctas', token: tokenGenerate });
-                        return [3 /*break*/, 6];
-                    case 5:
+                        return [3 /*break*/, 7];
+                    case 6:
                         res.status(300).send({ status: 'NOK', message: 'Las credenciales son incorrectas' });
-                        _a.label = 6;
-                    case 6: return [3 /*break*/, 8];
-                    case 7:
+                        _a.label = 7;
+                    case 7: return [3 /*break*/, 9];
+                    case 8:
                         res.status(404).send({ status: 'NOK', message: "El correo " + autenticacion.correo + " no se encuentra registrado" });
-                        _a.label = 8;
-                    case 8: return [3 /*break*/, 11];
-                    case 9:
+                        _a.label = 9;
+                    case 9: return [3 /*break*/, 12];
+                    case 10:
                         error_1 = _a.sent();
                         res.status(404).send({ status: 'NOK', message: "No fue posible autenticar su cuenta debido a " + error_1 });
-                        return [3 /*break*/, 11];
-                    case 10:
+                        return [3 /*break*/, 12];
+                    case 11:
                         connection.client.close();
                         return [7 /*endfinally*/];
-                    case 11: return [2 /*return*/];
+                    case 12: return [2 /*return*/];
                 }
             });
         });

@@ -11,6 +11,7 @@ import { AutenticacionModel } from '../models/autenticacion/autenticacion-model'
 // Token
 import Token from '../middlewares/token';
 import Security from '../classes/security';
+import UsuariosService from './usuarios-services';
 
 
 export default class AutenticacionService {
@@ -45,15 +46,21 @@ export default class AutenticacionService {
                 // Instancia de la clase security
                 const security = new Security();
                 // Valida si el password del usuario coincide con el password hasheado
-                const passwordCorrect = await security.decryptPassword(autenticacion.password, usuario.password);
+                const passwordCorrect = await security.decryptHash(autenticacion.password, usuario.password);
                 // Valida si la contraseña es correcta
                 if ( passwordCorrect ) {
                     // Inicializar clase Token
                     const token = new Token();
                     // Generar token de usuario
                     const tokenGenerate = await token.generateToken(autenticacion);
+                    // Id Usuario
+                    const idUsuario: string = usuario._id.toString();
+                    // Instancia de la clase de Usuarios Service
+                    const usuariosService = new UsuariosService();
+                    // Valida si el usuario ha registrado sus datos anteriormente
+                    const isRegistered = await usuariosService.validarRegistroDatosInicialesUsuario(idUsuario, database);
                     // Enviar token de usuario
-                    res.status(200).send({ status: 'OK', message: 'Credenciales correctas', token: tokenGenerate });
+                    res.status(200).send({ status: 'OK', message: 'Credenciales correctas', token: tokenGenerate, idUsuario:idUsuario, isRegistered: isRegistered });
                 } else {
                     res.status(300).send({ status: 'NOK', message: 'Las credenciales son incorrectas' });
                 }

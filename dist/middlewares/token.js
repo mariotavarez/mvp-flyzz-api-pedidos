@@ -39,57 +39,75 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Services
-var usuarios_services_1 = __importDefault(require("../services/usuarios-services"));
-var UsuariosController = /** @class */ (function () {
-    function UsuariosController() {
+// Enviroment
+var enviroment_1 = require("./../global/enviroment");
+// Json Web Token
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+// Constants
+var constants_1 = require("../global/constants");
+var Token = /** @class */ (function () {
+    function Token() {
     }
     /**
      * @author Mario Tavarez
-     * @date 16/09/2021
-     * @param req
-     * @param res
+     * @date 18/09/2021
+     * @description Genera el nuevo token del usuario de 24 horas
+     * @param autenticacion
      * @returns
      */
-    UsuariosController.prototype.altaUsuario = function (req, res) {
+    Token.prototype.generateToken = function (autenticacion) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseUsuarios;
+            var token;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.altaUsuario(req, res)];
+                    case 0: return [4 /*yield*/, jsonwebtoken_1.default.sign({
+                            payload: {
+                                correo: autenticacion.correo,
+                                createAt: new Date(),
+                                subject: constants_1.ASUNTO_TOKEN
+                            }
+                        }, enviroment_1.TOKEN, { expiresIn: '24h' })];
                     case 1:
-                        responseUsuarios = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseUsuarios];
+                        token = _a.sent();
+                        return [2 /*return*/, token];
                 }
             });
         });
     };
     /**
      * @author Mario Tavarez
-     * @date 109/09/2021
-     * @description Registra los datos de inicio del usuario
-     * @param req
-     * @param res
+     * @date 18/09/2021
+     * @description Valida el token del usuario
+     * @param token
+     * @returns
      */
-    UsuariosController.prototype.registrarDatosIniciales = function (req, res) {
+    Token.prototype.validateToken = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseRegistroDatosIniciales;
+            var token, responseToken, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.registrarDatosIniciales(req, res)];
+                        token = req.header("x-auth-token");
+                        // Si no eiste el token entonces enviar codigo de token necesario
+                        if (!token) {
+                            return [2 /*return*/, res.status(403).send({ status: 'NOK', message: 'Es necesario el token de autenticación' })];
+                        }
+                        _a.label = 1;
                     case 1:
-                        responseRegistroDatosIniciales = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseRegistroDatosIniciales];
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, jsonwebtoken_1.default.verify(token, enviroment_1.TOKEN)];
+                    case 2:
+                        responseToken = _a.sent();
+                        next();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, res.status(404).send({ status: 'NOK', message: 'El token es inválido' })];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    return UsuariosController;
+    return Token;
 }());
-exports.default = UsuariosController;
+exports.default = Token;

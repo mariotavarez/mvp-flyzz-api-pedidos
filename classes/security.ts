@@ -14,7 +14,7 @@ export default class Security {
      * @param password 
      * @returns 
      */
-    public async encryptPassword(password: string) { 
+    public async generateHash(password: string) { 
         // Numero de Salt Rounds
         const salt = await bcrypt.genSaltSync(SALTROUNDS);
         // Espera a que devuelve el hash del password
@@ -31,7 +31,7 @@ export default class Security {
      * @param passwordHash 
      * @returns 
      */
-    public async decryptPassword(password: string, passwordHash: string) { 
+    public async decryptHash(password: string, passwordHash: string) { 
         // Obtiene un booleano dependiendo si el password del usuario coincide con el hasheado
         const passwordCorrect = await bcrypt.compareSync(password, passwordHash); 
         // Returna la respuesta de la comparacion

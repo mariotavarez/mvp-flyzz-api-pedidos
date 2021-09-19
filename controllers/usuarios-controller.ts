@@ -23,5 +23,22 @@ export default class UsuariosController {
         return responseUsuarios;
     }
 
+    /**
+     * @author Mario Tavarez
+     * @date 109/09/2021
+     * @description Registra los datos de inicio del usuario
+     * @param req 
+     * @param res 
+     */
+    public async registrarDatosIniciales(req: Request, res: Response) {
+        // Inicializa el servicio de usuarios
+        const usuariosService = new UsuariosService();
+        // Obtiene la respuesta del servicio de registro de datos iniciales
+        const responseRegistroDatosIniciales = await usuariosService.registrarDatosIniciales(req, res);
+        // Devuelve la respuesta a la ruta
+        return responseRegistroDatosIniciales;
+
+    }
+
 
 }

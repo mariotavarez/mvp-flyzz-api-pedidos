@@ -40,56 +40,56 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // Services
-var usuarios_services_1 = __importDefault(require("../services/usuarios-services"));
-var UsuariosController = /** @class */ (function () {
-    function UsuariosController() {
+var productos_services_1 = __importDefault(require("../services/productos-services"));
+var ProductosController = /** @class */ (function () {
+    function ProductosController() {
     }
     /**
      * @author Mario Tavarez
-     * @date 16/09/2021
+     * @date 18/09/2021
+     * @description Devuelve el listado de productos
      * @param req
      * @param res
      * @returns
      */
-    UsuariosController.prototype.altaUsuario = function (req, res) {
+    ProductosController.prototype.getProductos = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseUsuarios;
+            var productosService, responseProductosService;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.altaUsuario(req, res)];
+                        productosService = new productos_services_1.default();
+                        return [4 /*yield*/, productosService.getProductos(res)];
                     case 1:
-                        responseUsuarios = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseUsuarios];
+                        responseProductosService = _a.sent();
+                        return [2 /*return*/, responseProductosService];
                 }
             });
         });
     };
     /**
      * @author Mario Tavarez
-     * @date 109/09/2021
-     * @description Registra los datos de inicio del usuario
+     * @date 18/09/2021
+     * @description Devuelve el listado de productos por categoria
      * @param req
      * @param res
+     * @returns
      */
-    UsuariosController.prototype.registrarDatosIniciales = function (req, res) {
+    ProductosController.prototype.getProductosByCategoria = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseRegistroDatosIniciales;
+            var productosService, responseProductosServiceByCategoria;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.registrarDatosIniciales(req, res)];
+                        productosService = new productos_services_1.default();
+                        return [4 /*yield*/, productosService.getProductosByCategoria(req, res)];
                     case 1:
-                        responseRegistroDatosIniciales = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseRegistroDatosIniciales];
+                        responseProductosServiceByCategoria = _a.sent();
+                        return [2 /*return*/, responseProductosServiceByCategoria];
                 }
             });
         });
     };
-    return UsuariosController;
+    return ProductosController;
 }());
-exports.default = UsuariosController;
+exports.default = ProductosController;

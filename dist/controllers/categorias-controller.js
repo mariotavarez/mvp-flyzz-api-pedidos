@@ -40,56 +40,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // Services
-var usuarios_services_1 = __importDefault(require("../services/usuarios-services"));
-var UsuariosController = /** @class */ (function () {
-    function UsuariosController() {
+var categorias_services_1 = __importDefault(require("../services/categorias-services"));
+var CategoriasController = /** @class */ (function () {
+    function CategoriasController() {
     }
     /**
      * @author Mario Tavarez
-     * @date 16/09/2021
+     * @date 18/09/2021
+     * @description Devuelve el listado de categorias
      * @param req
      * @param res
      * @returns
      */
-    UsuariosController.prototype.altaUsuario = function (req, res) {
+    CategoriasController.prototype.getCategorias = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseUsuarios;
+            var categoriasService, responseCategorias;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.altaUsuario(req, res)];
+                        categoriasService = new categorias_services_1.default();
+                        return [4 /*yield*/, categoriasService.getCategorias(res)];
                     case 1:
-                        responseUsuarios = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseUsuarios];
+                        responseCategorias = _a.sent();
+                        return [2 /*return*/, responseCategorias];
                 }
             });
         });
     };
-    /**
-     * @author Mario Tavarez
-     * @date 109/09/2021
-     * @description Registra los datos de inicio del usuario
-     * @param req
-     * @param res
-     */
-    UsuariosController.prototype.registrarDatosIniciales = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseRegistroDatosIniciales;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.registrarDatosIniciales(req, res)];
-                    case 1:
-                        responseRegistroDatosIniciales = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseRegistroDatosIniciales];
-                }
-            });
-        });
-    };
-    return UsuariosController;
+    return CategoriasController;
 }());
-exports.default = UsuariosController;
+exports.default = CategoriasController;

@@ -11,8 +11,12 @@ import productosRouter from "./routes/productos-route";
 import bodyParser from 'body-parser';
 // Cors
 import cors from 'cors';
+// Token
+import Token from "./middlewares/token";
 // Server
 const server = new Server();
+// Inicializa el middleware de autenticacion del Token
+const token = new Token();
 
 server.app.use(bodyParser.json());
 server.app.use(bodyParser.urlencoded({
@@ -26,9 +30,9 @@ server.app.use('/autenticacion', autenticacionRouter);
 // Usuarios Routes
 server.app.use('/usuarios', usuariosRouter);
 // Categorias Routes
-server.app.use('/categorias', categoriasRouter);
+server.app.use('/categorias', token.validateToken, categoriasRouter);
 // Productos Routes
-server.app.use('/productos', productosRouter);
+server.app.use('/productos', token.validateToken, productosRouter);
 
 // Inicio de servidor
 server.start(() => {

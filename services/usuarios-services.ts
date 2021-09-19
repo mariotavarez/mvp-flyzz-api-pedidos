@@ -1,6 +1,9 @@
+import { COLLECTIONS } from './../global/enviroment';
+// Express
+import { Request, Response } from "express";
+// Constants
 import { PLANTILLAS_CORREO } from '../global/constants';
 // Connection DB
-import { Request, Response } from "express";
 import { Collection } from "mongodb";
 // Connection Database
 import Connection from "../classes/connection";
@@ -8,9 +11,13 @@ import Connection from "../classes/connection";
 import { DATABASE } from "../global/enviroment";
 // Models
 import { AltaUsuarioModel } from "../models/usuarios/registro-model";
+// Utils
 import Mail from "../utils/mail";
-import { UsuarioCuentaModel } from '../models/usuarios/usuarioCuenta-model';
+// Security
 import Security from '../classes/security';
+// Models
+import { UsuarioCuentaModel } from '../models/usuarios/usuarioCuenta-model';
+import { RegistroDatosInicialesModel } from '../models/usuarios/registroDatosIniciales-model';
 
 export default class UsuariosService {
 
@@ -34,7 +41,7 @@ export default class UsuariosService {
         // Database
         const database = connection.client.db(DATABASE.dbName);
         // Collecion
-        const quotesCollection = database.collection('usuarios');
+        const quotesCollection = database.collection(COLLECTIONS.usuarios);
         // Valida si ya se ha registrado anteriormente el correo del usuario
         const idRepeated: boolean = await this.validarExistenciaCorreo(altaUsuario.correo, quotesCollection);
         // Si no esta repetido entonces registra la cuenta del usuario
@@ -42,7 +49,7 @@ export default class UsuariosService {
             // Instancia de la clase de Security
             const security = new Security();
             // Generacion de nuevo password
-            altaUsuario.password = await security.encryptPassword(altaUsuario.password);
+            altaUsuario.password = await security.generateHash(altaUsuario.password);
             // Realiza la insercion en la coleccion de usuarios
             await quotesCollection.insertOne(altaUsuario);
             try {
@@ -86,6 +93,64 @@ export default class UsuariosService {
         }
 
         return isRepeated;
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 19/09/2021
+     * @description Valida si tiene datos registrados el usuario, si tiene datos entonces regresa true, de lo contrario false ya que es la primera vez que
+     *              el usuario ingresara sus datos
+     * @param idUsuario 
+     * @param database 
+     * @returns 
+     */
+    public async validarRegistroDatosInicialesUsuario(idUsuario: string, database: any) {
+
+        // Valida si tiene datos registrados el usuario
+        let hadData: boolean = false;
+        // Collecion
+        const quotesCollection = database.collection(COLLECTIONS.informacionUsuarios);
+        // Realiza una consulta a la collecion de informacion de usuarios
+        const informacionUsuario: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOne({ idUsuario: idUsuario });
+        // Valida si devuelve informacion del usuario
+        if (informacionUsuario) {
+            hadData = true;
+        }
+
+        return hadData;
+
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 19/09/2021
+     * @description Registra los datos iniciales del usuario tales como: Nombres, Apellidos, Calle, C.P, etc.
+     * @param req 
+     * @param res 
+     */
+    public async registrarDatosIniciales(req: Request, res: Response) {
+        // Obtiene el los datos del usuario a registrar
+        const registroDatosIniciales: RegistroDatosInicialesModel = req.body;
+        // Inicializa el objeto de BD de MongoDB
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion
+        const quotesCollection = database.collection('informacion-usuarios');
+        // Registra los datos iniciales del usuario
+        await quotesCollection.insertOne(registroDatosIniciales);
+        // Si no esta repetido entonces registra la cuenta del usuario
+        try {
+            res.status(200).send({ status: 'OK', message: 'Muy bien, sus datos se han registrado correctamente' });
+        } catch (error) {
+            console.log('No fue posible registrar sus datos debido a: ', error);
+
+            res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos, intentelo más tarde nuevamente' });
+        } finally {
+            connection.client.close();
+        }
     }
 
 }

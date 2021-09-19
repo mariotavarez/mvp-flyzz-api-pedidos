@@ -16,8 +16,12 @@ var productos_route_1 = __importDefault(require("./routes/productos-route"));
 var body_parser_1 = __importDefault(require("body-parser"));
 // Cors
 var cors_1 = __importDefault(require("cors"));
+// Token
+var token_1 = __importDefault(require("./middlewares/token"));
 // Server
 var server = new server_1.default();
+// Inicializa el middleware de autenticacion del Token
+var token = new token_1.default();
 server.app.use(body_parser_1.default.json());
 server.app.use(body_parser_1.default.urlencoded({
     extended: true
@@ -29,9 +33,9 @@ server.app.use('/autenticacion', autenticacion_route_1.default);
 // Usuarios Routes
 server.app.use('/usuarios', usuarios_route_1.default);
 // Categorias Routes
-server.app.use('/categorias', categorias_route_1.default);
+server.app.use('/categorias', token.validateToken, categorias_route_1.default);
 // Productos Routes
-server.app.use('/productos', productos_route_1.default);
+server.app.use('/productos', token.validateToken, productos_route_1.default);
 // Inicio de servidor
 server.start(function () {
     console.log("MVP FLYZZ Corriendo en el puerto " + enviroment_1.SERVER_PORT);

@@ -39,57 +39,59 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Services
-var usuarios_services_1 = __importDefault(require("../services/usuarios-services"));
-var UsuariosController = /** @class */ (function () {
-    function UsuariosController() {
+// Bcrypt
+var bcrypt_1 = __importDefault(require("bcrypt"));
+// Enviroments
+var enviroment_1 = require("../global/enviroment");
+var Security = /** @class */ (function () {
+    function Security() {
     }
     /**
      * @author Mario Tavarez
-     * @date 16/09/2021
-     * @param req
-     * @param res
+     * @date 19/09/2021
+     * @description Devuelve el password encriptado
+     * @param password
      * @returns
      */
-    UsuariosController.prototype.altaUsuario = function (req, res) {
+    Security.prototype.generateHash = function (password) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseUsuarios;
+            var salt, passwordHash;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.altaUsuario(req, res)];
+                    case 0: return [4 /*yield*/, bcrypt_1.default.genSaltSync(enviroment_1.SALTROUNDS)];
                     case 1:
-                        responseUsuarios = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseUsuarios];
+                        salt = _a.sent();
+                        return [4 /*yield*/, bcrypt_1.default.hashSync(password, salt)];
+                    case 2:
+                        passwordHash = _a.sent();
+                        // Devuelve el password hasheado
+                        return [2 /*return*/, passwordHash];
                 }
             });
         });
     };
     /**
      * @author Mario Tavarez
-     * @date 109/09/2021
-     * @description Registra los datos de inicio del usuario
-     * @param req
-     * @param res
+     * @date 19/08/2021
+     * @description Valida si el password del usuario coincide con el password hasheado
+     * @param password
+     * @param passwordHash
+     * @returns
      */
-    UsuariosController.prototype.registrarDatosIniciales = function (req, res) {
+    Security.prototype.decryptHash = function (password, passwordHash) {
         return __awaiter(this, void 0, void 0, function () {
-            var usuariosService, responseRegistroDatosIniciales;
+            var passwordCorrect;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        usuariosService = new usuarios_services_1.default();
-                        return [4 /*yield*/, usuariosService.registrarDatosIniciales(req, res)];
+                    case 0: return [4 /*yield*/, bcrypt_1.default.compareSync(password, passwordHash)];
                     case 1:
-                        responseRegistroDatosIniciales = _a.sent();
-                        // Devuelve la respuesta a la ruta
-                        return [2 /*return*/, responseRegistroDatosIniciales];
+                        passwordCorrect = _a.sent();
+                        // Returna la respuesta de la comparacion
+                        return [2 /*return*/, passwordCorrect];
                 }
             });
         });
     };
-    return UsuariosController;
+    return Security;
 }());
-exports.default = UsuariosController;
+exports.default = Security;

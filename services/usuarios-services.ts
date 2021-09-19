@@ -1,4 +1,4 @@
-import { PLANTILLAS_CORREO } from './../global/constants';
+import { PLANTILLAS_CORREO } from '../global/constants';
 // Connection DB
 import { Request, Response } from "express";
 import { Collection } from "mongodb";
@@ -9,7 +9,7 @@ import { DATABASE } from "../global/enviroment";
 // Models
 import { AltaUsuarioModel } from "../models/usuarios/registro-model";
 import Mail from "../utils/mail";
-import { UsuarioCuentaModel } from './../models/usuarios/usuarioCuenta-model';
+import { UsuarioCuentaModel } from '../models/usuarios/usuarioCuenta-model';
 
 export default class UsuariosService {
 

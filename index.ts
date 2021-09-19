@@ -6,6 +6,7 @@ import { SERVER_PORT } from "./global/enviroment";
 import autenticacionRouter from "./routes/autenticacion-route";
 import usuariosRouter from "./routes/usuarios-route";
 import categoriasRouter from "./routes/categorias-route";
+import productosRouter from "./routes/productos-route";
 // Body Parser
 import bodyParser from 'body-parser';
 // Cors
@@ -26,6 +27,8 @@ server.app.use('/autenticacion', autenticacionRouter);
 server.app.use('/usuarios', usuariosRouter);
 // Categorias Routes
 server.app.use('/categorias', categoriasRouter);
+// Productos Routes
+server.app.use('/productos', productosRouter);
 
 // Inicio de servidor
 server.start(() => {

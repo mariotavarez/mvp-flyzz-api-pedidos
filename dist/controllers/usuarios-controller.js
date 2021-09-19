@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // Services
-var usuarios_service_1 = __importDefault(require("../services/usuarios-service"));
+var usuarios_services_1 = __importDefault(require("../services/usuarios-services"));
 var UsuariosController = /** @class */ (function () {
     function UsuariosController() {
     }
@@ -57,7 +57,7 @@ var UsuariosController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        usuariosService = new usuarios_service_1.default();
+                        usuariosService = new usuarios_services_1.default();
                         return [4 /*yield*/, usuariosService.altaUsuario(req, res)];
                     case 1:
                         responseUsuarios = _a.sent();

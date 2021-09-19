@@ -1,7 +1,7 @@
 // Request, Response
 import { Request, Response } from 'express';
 // Services
-import UsuariosService from '../services/usuarios-service';
+import UsuariosService from '../services/usuarios-services';
 
 export default class UsuariosController { 
 

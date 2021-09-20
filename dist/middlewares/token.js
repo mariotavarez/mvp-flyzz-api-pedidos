@@ -45,6 +45,8 @@ var enviroment_1 = require("./../global/enviroment");
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // Constants
 var constants_1 = require("../global/constants");
+// Log Server
+var logServer_1 = __importDefault(require("../classes/logServer"));
 var Token = /** @class */ (function () {
     function Token() {
     }
@@ -83,13 +85,16 @@ var Token = /** @class */ (function () {
      */
     Token.prototype.validateToken = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var token, responseToken, error_1;
+            var token, logServer, logger, responseToken, error_1, logServer, logger;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         token = req.header("x-auth-token");
                         // Si no eiste el token entonces enviar codigo de token necesario
                         if (!token) {
+                            logServer = new logServer_1.default();
+                            logger = logServer.getLogConfigMVP();
+                            logger.warn("TOKEN VAC\u00CDO: Request " + req.originalUrl + " Payload: " + JSON.stringify(req.body) + ", IP: " + req.ip + ", PATH: " + req.path + ", URL: " + req.url);
                             return [2 /*return*/, res.status(403).send({ status: 'NOK', message: 'Es necesario el token de autenticación' })];
                         }
                         _a.label = 1;
@@ -102,6 +107,9 @@ var Token = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         error_1 = _a.sent();
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        logger.warn("TOKEN INV\u00C1LIDO: Request " + req.originalUrl + " Payload: " + JSON.stringify(req.body) + ", IP: " + req.ip + ", PATH: " + req.path + ", URL: " + req.url + ", por error " + error_1);
                         return [2 /*return*/, res.status(404).send({ status: 'NOK', message: 'El token es inválido' })];
                     case 4: return [2 /*return*/];
                 }

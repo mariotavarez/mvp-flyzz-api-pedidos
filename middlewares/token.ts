@@ -8,6 +8,10 @@ import { AutenticacionModel } from './../models/autenticacion/autenticacion-mode
 import jsonwebtoken from 'jsonwebtoken';
 // Constants
 import { ASUNTO_TOKEN } from '../global/constants';
+// Log Server
+import LogServer from '../classes/logServer';
+// Log4js
+import { Logger } from 'log4js';
 
 export default class Token {
 
@@ -46,18 +50,24 @@ export default class Token {
         const token = req.header("x-auth-token");
         // Si no eiste el token entonces enviar codigo de token necesario
         if ( !token  ) {
+            // Crea la instancia de Servidor de Log
+            const logServer = new LogServer();
+            // Obtiene la configuracion del log MVP
+            const logger: Logger = logServer.getLogConfigMVP();
+            logger.warn(`TOKEN VACÍO: Request ${req.originalUrl} Payload: ${JSON.stringify(req.body)}, IP: ${req.ip}, PATH: ${req.path}, URL: ${req.url}`);
             return res.status(403).send({status: 'NOK', message: 'Es necesario el token de autenticación'});
         }
-
         try {
             const responseToken = await jsonwebtoken.verify(token, TOKEN);
             next();
         } catch (error) {
+             // Crea la instancia de Servidor de Log
+            const logServer = new LogServer();
+            // Obtiene la configuracion del log MVP
+            const logger: Logger = logServer.getLogConfigMVP();
+            logger.warn(`TOKEN INVÁLIDO: Request ${req.originalUrl} Payload: ${JSON.stringify(req.body)}, IP: ${req.ip}, PATH: ${req.path}, URL: ${req.url}, por error ${error}`);
             return res.status(404).send({status: 'NOK', message: 'El token es inválido'});
         }
 
     }
-
-
-
 }

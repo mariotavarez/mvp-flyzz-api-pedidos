@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// Enviroment
 var enviroment_1 = require("./../global/enviroment");
 // Constants
 var constants_1 = require("../global/constants");
@@ -50,6 +51,8 @@ var enviroment_2 = require("../global/enviroment");
 var mail_1 = __importDefault(require("../utils/mail"));
 // Security
 var security_1 = __importDefault(require("../classes/security"));
+// Log Server
+var logServer_1 = __importDefault(require("../classes/logServer"));
 var UsuariosService = /** @class */ (function () {
     function UsuariosService() {
     }
@@ -62,10 +65,12 @@ var UsuariosService = /** @class */ (function () {
     */
     UsuariosService.prototype.altaUsuario = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var altaUsuario, connection, database, quotesCollection, idRepeated, security, _a, mail, error_1;
+            var logServer, logger, altaUsuario, connection, database, quotesCollection, idRepeated, security, _a, mail, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
                         altaUsuario = req.body;
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
@@ -99,7 +104,7 @@ var UsuariosService = /** @class */ (function () {
                         return [4 /*yield*/, mail.sendMail(altaUsuario.correo, constants_1.PLANTILLAS_CORREO.registro).then(function (email) {
                                 res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
                             }).catch(function (error) {
-                                console.log(error.message);
+                                logger.error("ALTA USUARIOS: Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la direcci\u00F3n de correo " + altaUsuario.correo + " debido a " + error.message);
                                 res.status(200).send({ status: 'NOK', message: "Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la direcci\u00F3n de correo " + altaUsuario.correo });
                             })];
                     case 6:
@@ -108,6 +113,7 @@ var UsuariosService = /** @class */ (function () {
                         return [3 /*break*/, 9];
                     case 7:
                         error_1 = _b.sent();
+                        logger.error("ALTA USUARIOS: No fue posible registrar los datos de la cuenta " + altaUsuario.correo + " debido a " + error_1);
                         res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos' });
                         return [3 /*break*/, 9];
                     case 8:
@@ -190,10 +196,12 @@ var UsuariosService = /** @class */ (function () {
      */
     UsuariosService.prototype.registrarDatosIniciales = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var registroDatosIniciales, connection, database, quotesCollection;
+            var logServer, logger, registroDatosIniciales, connection, database, quotesCollection;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
                         registroDatosIniciales = req.body;
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
@@ -202,7 +210,7 @@ var UsuariosService = /** @class */ (function () {
                         // Espera a que conecte la BD
                         _a.sent();
                         database = connection.client.db(enviroment_2.DATABASE.dbName);
-                        quotesCollection = database.collection('informacion-usuarios');
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.informacionUsuarios);
                         // Registra los datos iniciales del usuario
                         return [4 /*yield*/, quotesCollection.insertOne(registroDatosIniciales)];
                     case 2:
@@ -213,7 +221,7 @@ var UsuariosService = /** @class */ (function () {
                             res.status(200).send({ status: 'OK', message: 'Muy bien, sus datos se han registrado correctamente' });
                         }
                         catch (error) {
-                            console.log('No fue posible registrar sus datos debido a: ', error);
+                            logger.error("REGISTRO DATOS INICIALES: No fue posible registrar sus datos debido a: " + error);
                             res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos, intentelo más tarde nuevamente' });
                         }
                         finally {

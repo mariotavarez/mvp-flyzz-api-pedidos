@@ -13,11 +13,21 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 // Token
 import Token from "./middlewares/token";
+// Log Server
+import LogServer from "./classes/logServer";
+// Log4js
+import { Logger } from "log4js";
 // Server
 const server = new Server();
 // Inicializa el middleware de autenticacion del Token
 const token = new Token();
-
+// Inicializa el log
+const logServer = new LogServer();
+// Crea el log del servidor
+logServer.createLogServer();
+// Obtiene la configuracion del log MVP
+const logger: Logger = logServer.getLogConfigMVP();
+// Json Body Parser
 server.app.use(bodyParser.json());
 server.app.use(bodyParser.urlencoded({
   extended: true
@@ -36,6 +46,7 @@ server.app.use('/productos', token.validateToken, productosRouter);
 
 // Inicio de servidor
 server.start(() => {
+  logger.info(`INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`);
 	console.log(`MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`)
 });
 

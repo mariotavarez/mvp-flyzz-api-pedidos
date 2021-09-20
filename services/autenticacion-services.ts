@@ -10,8 +10,14 @@ import { COLLECTIONS, DATABASE } from './../global/enviroment';
 import { AutenticacionModel } from '../models/autenticacion/autenticacion-model';
 // Token
 import Token from '../middlewares/token';
+// Security
 import Security from '../classes/security';
+// Services
 import UsuariosService from './usuarios-services';
+// Log Server
+import LogServer from '../classes/logServer';
+// Log4js
+import { Logger } from 'log4js';
 
 
 export default class AutenticacionService {
@@ -27,7 +33,10 @@ export default class AutenticacionService {
      * @param res 
      */
     public async autenticarUsuario(req: Request, res: Response) {
-
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
         // Inicializa el objeto de BD de MongoDB
         const connection = new Connection();
         // Espera a que conecte la BD
@@ -69,6 +78,7 @@ export default class AutenticacionService {
             }
 
         } catch (error) {
+            logger.error(`No fue posible autenticar la cuenta ${autenticacion.correo} debido a: ${error}`);
             res.status(404).send({ status: 'NOK', message: `No fue posible autenticar su cuenta debido a ${error}` });
         } finally {
             connection.client.close();

@@ -39,61 +39,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Connection
-var connection_1 = __importDefault(require("../classes/connection"));
-// Enviroment
-var enviroment_1 = require("../global/enviroment");
-// Log Server
-var logServer_1 = __importDefault(require("../classes/logServer"));
-var CategoriasService = /** @class */ (function () {
-    function CategoriasService() {
+// Log4js
+var log4js_1 = __importDefault(require("log4js"));
+var LogServer = /** @class */ (function () {
+    function LogServer() {
     }
     /**
      * @author Mario Tavarez
-     * @description Devuelve el listado de categorias
-     * @date 18/09/2021
-     * @param res
+     * @date 19/09/2021
+     * @description Crea la configuracion del log del servidor
      */
-    CategoriasService.prototype.getCategorias = function (res) {
+    LogServer.prototype.createLogServer = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, connection, database, quotesCollection, categorias;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        logServer = new logServer_1.default();
-                        logger = logServer.getLogConfigMVP();
-                        connection = new connection_1.default();
-                        // Espera a que conecte la BD
-                        return [4 /*yield*/, connection.connectToDB()];
-                    case 1:
-                        // Espera a que conecte la BD
-                        _a.sent();
-                        database = connection.client.db(enviroment_1.DATABASE.dbName);
-                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.categorias);
-                        return [4 /*yield*/, quotesCollection.find({}).toArray()];
-                    case 2:
-                        categorias = _a.sent();
-                        try {
-                            // Valida si existen categorias registradas
-                            if (categorias) {
-                                res.status(200).send({ status: 'OK', categorias: categorias });
-                            }
-                            else {
-                                res.status(404).send({ status: 'NOK', message: 'No fue posible devolver las categorias' });
-                            }
-                        }
-                        catch (error) {
-                            logger.error("LISTADO CATEGORIAS: No fue posible devolver las categorias debido a " + error);
-                            res.status(404).send({ status: 'NOK', message: "No fue posible devolver las categorias debido a " + error });
-                        }
-                        finally {
-                            connection.client.close();
-                        }
-                        return [2 /*return*/];
-                }
+                // Configuracion de log
+                log4js_1.default.configure({
+                    appenders: { mvp: { type: "file", filename: "mvp-flyzz.log" } },
+                    categories: { default: { appenders: ["mvp"], level: "info" } }
+                });
+                return [2 /*return*/];
             });
         });
     };
-    return CategoriasService;
+    /**
+     * @author Mario Tavarez
+     * @date 19/09/2021
+     * @description Devuelve la configuracion del log MVP
+     * @returns
+     */
+    LogServer.prototype.getLogConfigMVP = function () {
+        // Obtiene la configuracion del log MVP
+        var logger = log4js_1.default.getLogger("mvp");
+        // Regresa el objeto logger de configuracion
+        return logger;
+    };
+    return LogServer;
 }());
-exports.default = CategoriasService;
+exports.default = LogServer;

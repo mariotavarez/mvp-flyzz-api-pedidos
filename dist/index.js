@@ -18,10 +18,19 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var cors_1 = __importDefault(require("cors"));
 // Token
 var token_1 = __importDefault(require("./middlewares/token"));
+// Log Server
+var logServer_1 = __importDefault(require("./classes/logServer"));
 // Server
 var server = new server_1.default();
 // Inicializa el middleware de autenticacion del Token
 var token = new token_1.default();
+// Inicializa el log
+var logServer = new logServer_1.default();
+// Crea el log del servidor
+logServer.createLogServer();
+// Obtiene la configuracion del log MVP
+var logger = logServer.getLogConfigMVP();
+// Json Body Parser
 server.app.use(body_parser_1.default.json());
 server.app.use(body_parser_1.default.urlencoded({
     extended: true
@@ -38,5 +47,6 @@ server.app.use('/categorias', token.validateToken, categorias_route_1.default);
 server.app.use('/productos', token.validateToken, productos_route_1.default);
 // Inicio de servidor
 server.start(function () {
+    logger.info("INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto " + enviroment_1.SERVER_PORT);
     console.log("MVP FLYZZ Corriendo en el puerto " + enviroment_1.SERVER_PORT);
 });

@@ -45,15 +45,26 @@ var constants_1 = require("./../global/constants");
 var nodemailer_1 = __importDefault(require("nodemailer"));
 // Email Config
 var enviroment_1 = require("../global/enviroment");
+// Log Server
+var logServer_1 = __importDefault(require("../classes/logServer"));
 var Mail = /** @class */ (function () {
     function Mail() {
     }
+    /**
+     * @author Mario Tavarez
+     * @date 19/07/2021
+     * @description Envia el email al destinatario y dependiendo de la plantilla envia el correo correspondiente
+     * @param correoDestinatario
+     * @param plantilla
+     */
     Mail.prototype.sendMail = function (correoDestinatario, plantilla) {
         return __awaiter(this, void 0, void 0, function () {
-            var transporter, plantillaHTML, asuntoCorreo, mailOptions;
+            var logServer, logger, transporter, plantillaHTML, asuntoCorreo, mailOptions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
                         transporter = nodemailer_1.default.createTransport({
                             service: enviroment_1.EMAIL_CONFIG.service,
                             secure: enviroment_1.EMAIL_CONFIG.secure,
@@ -77,11 +88,12 @@ var Mail = /** @class */ (function () {
                         };
                         // Envio de correo
                         return [4 /*yield*/, transporter.sendMail(mailOptions, function (error, info) {
+                                // Valida si existe un error
                                 if (error) {
-                                    console.log('No fue posible enviar el correo debido a: ', error.message);
+                                    logger.error("ENVIO ASUNTO DE CORREO " + asuntoCorreo + ": No fue posible enviar el correo al destinatario " + correoDestinatario + " debido a: " + error.message);
                                 }
                                 else {
-                                    console.log('correo enviado correctamente');
+                                    logger.info("ENVIO ASUNTO DE CORREO " + asuntoCorreo + ": Correo enviado correctamente al destinatario " + correoDestinatario);
                                 }
                             })];
                     case 1:

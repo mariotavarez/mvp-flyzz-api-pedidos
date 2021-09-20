@@ -1,0 +1,17 @@
+[2021-09-19T21:25:51.363] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:30:57.636] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:32:05.346] [WARN] mvp - TOKEN INVÁLIDO: Request [object Object], por error JsonWebTokenError: invalid token
+[2021-09-19T21:35:40.150] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:35:46.338] [WARN] mvp - TOKEN INVÁLIDO: Request {}, por error JsonWebTokenError: invalid token
+[2021-09-19T21:36:41.095] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:36:47.137] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:36:50.673] [WARN] mvp - TOKEN INVÁLIDO: Request "::1", por error JsonWebTokenError: invalid token
+[2021-09-19T21:37:12.662] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:37:14.847] [WARN] mvp - TOKEN INVÁLIDO: Request "::1", por error JsonWebTokenError: invalid token
+[2021-09-19T21:37:27.988] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:37:29.946] [WARN] mvp - TOKEN INVÁLIDO: Request "/productos/", por error JsonWebTokenError: invalid token
+[2021-09-19T21:39:41.350] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:39:47.108] [WARN] mvp - TOKEN INVÁLIDO: Request "/productos/" Payload: [object Object], IP: ::1, PATH: /, URL: /, por error JsonWebTokenError: invalid token
+[2021-09-19T21:39:54.577] [WARN] mvp - TOKEN INVÁLIDO: Request "/productos/" Payload: [object Object], IP: ::1, PATH: /, URL: /, por error JsonWebTokenError: invalid token
+[2021-09-19T21:41:07.802] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T21:41:58.734] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201

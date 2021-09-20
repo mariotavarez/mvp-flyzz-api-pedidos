@@ -1,3 +1,4 @@
+// Enviroment
 import { COLLECTIONS } from './../global/enviroment';
 // Express
 import { Request, Response } from "express";
@@ -18,6 +19,10 @@ import Security from '../classes/security';
 // Models
 import { UsuarioCuentaModel } from '../models/usuarios/usuarioCuenta-model';
 import { RegistroDatosInicialesModel } from '../models/usuarios/registroDatosIniciales-model';
+// Log Server
+import LogServer from '../classes/logServer';
+// Log4js
+import { Logger } from 'log4js';
 
 export default class UsuariosService {
 
@@ -31,7 +36,10 @@ export default class UsuariosService {
     * @param res 
     */
     public async altaUsuario(req: Request, res: Response) {
-
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
         // Obtiene el los datos del usuario
         const altaUsuario: AltaUsuarioModel = req.body;
         // Inicializa el objeto de BD de MongoDB
@@ -59,10 +67,11 @@ export default class UsuariosService {
                 await mail.sendMail(altaUsuario.correo, PLANTILLAS_CORREO.registro).then(email => {
                     res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
                 }).catch(error => {
-                    console.log(error.message);
+                    logger.error(`ALTA USUARIOS: Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la dirección de correo ${altaUsuario.correo} debido a ${error.message}`);
                     res.status(200).send({ status: 'NOK', message: `Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la dirección de correo ${altaUsuario.correo}` });
                 });
             } catch (error) {
+                logger.error(`ALTA USUARIOS: No fue posible registrar los datos de la cuenta ${altaUsuario.correo} debido a ${error}`);
                 res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos' });
             } finally {
                 connection.client.close();
@@ -129,6 +138,10 @@ export default class UsuariosService {
      * @param res 
      */
     public async registrarDatosIniciales(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
         // Obtiene el los datos del usuario a registrar
         const registroDatosIniciales: RegistroDatosInicialesModel = req.body;
         // Inicializa el objeto de BD de MongoDB
@@ -138,15 +151,14 @@ export default class UsuariosService {
         // Database
         const database = connection.client.db(DATABASE.dbName);
         // Collecion
-        const quotesCollection = database.collection('informacion-usuarios');
+        const quotesCollection = database.collection(COLLECTIONS.informacionUsuarios);
         // Registra los datos iniciales del usuario
         await quotesCollection.insertOne(registroDatosIniciales);
         // Si no esta repetido entonces registra la cuenta del usuario
         try {
             res.status(200).send({ status: 'OK', message: 'Muy bien, sus datos se han registrado correctamente' });
         } catch (error) {
-            console.log('No fue posible registrar sus datos debido a: ', error);
-
+            logger.error(`REGISTRO DATOS INICIALES: No fue posible registrar sus datos debido a: ${error}`);
             res.status(404).send({ status: 'NOK', message: 'No fue posible registrar sus datos, intentelo más tarde nuevamente' });
         } finally {
             connection.client.close();

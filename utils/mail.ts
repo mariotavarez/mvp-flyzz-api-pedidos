@@ -4,15 +4,28 @@ import { ASUNTOS_CORREO, PLANTILLAS_CORREO } from './../global/constants';
 import nodemailer from 'nodemailer';
 // Email Config
 import { EMAIL_CONFIG } from '../global/enviroment';
-
-
+// Log Server
+import LogServer from '../classes/logServer';
+// Log4js
+import { Logger } from 'log4js';
 
 export default class Mail {
 
     constructor() { }
 
+    /**
+     * @author Mario Tavarez
+     * @date 19/07/2021
+     * @description Envia el email al destinatario y dependiendo de la plantilla envia el correo correspondiente
+     * @param correoDestinatario 
+     * @param plantilla 
+     */
     public async sendMail(correoDestinatario: string, plantilla: string): Promise<any> {
-
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Crea la configuracion de las credenciales
         const transporter = nodemailer.createTransport({
             service: EMAIL_CONFIG.service,
             secure: EMAIL_CONFIG.secure,
@@ -39,10 +52,11 @@ export default class Mail {
         };
         // Envio de correo
         await transporter.sendMail(mailOptions, function (error, info) {
+            // Valida si existe un error
             if (error) {
-                console.log('No fue posible enviar el correo debido a: ', error.message);
+                logger.error(`ENVIO ASUNTO DE CORREO ${asuntoCorreo}: No fue posible enviar el correo al destinatario ${correoDestinatario} debido a: ${error.message}`);
             } else {
-                console.log('correo enviado correctamente');
+                logger.info(`ENVIO ASUNTO DE CORREO ${asuntoCorreo}: Correo enviado correctamente al destinatario ${correoDestinatario}`);
             }
         });
 

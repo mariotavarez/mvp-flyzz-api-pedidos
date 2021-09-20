@@ -43,6 +43,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var connection_1 = __importDefault(require("../classes/connection"));
 // Enviroment
 var enviroment_1 = require("../global/enviroment");
+// Log Server
+var logServer_1 = __importDefault(require("../classes/logServer"));
 var ProductosService = /** @class */ (function () {
     function ProductosService() {
     }
@@ -54,10 +56,12 @@ var ProductosService = /** @class */ (function () {
      */
     ProductosService.prototype.getProductos = function (res) {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, database, quotesCollection, productos;
+            var logServer, logger, connection, database, quotesCollection, productos;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
                         return [4 /*yield*/, connection.connectToDB()];
@@ -79,6 +83,7 @@ var ProductosService = /** @class */ (function () {
                             }
                         }
                         catch (error) {
+                            logger.error("DEVOLUCION DE PRODUCTOS: No fue posible devolver los productos debido a " + error);
                             res.status(404).send({ status: 'NOK', message: "No fue posible devolver los productos debido a " + error });
                         }
                         finally {
@@ -98,10 +103,12 @@ var ProductosService = /** @class */ (function () {
      */
     ProductosService.prototype.getProductosByCategoria = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, database, idCategoria, quotesCollection, productos;
+            var logServer, logger, connection, database, idCategoria, quotesCollection, productos;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
                         return [4 /*yield*/, connection.connectToDB()];
@@ -111,7 +118,6 @@ var ProductosService = /** @class */ (function () {
                         database = connection.client.db(enviroment_1.DATABASE.dbName);
                         idCategoria = req.params.idCategoria;
                         quotesCollection = database.collection(enviroment_1.COLLECTIONS.productos);
-                        console.log();
                         return [4 /*yield*/, quotesCollection.find({ idCategoria: idCategoria }).toArray()];
                     case 2:
                         productos = _a.sent();
@@ -131,6 +137,7 @@ var ProductosService = /** @class */ (function () {
                             }
                         }
                         catch (error) {
+                            logger.error("DEVOLUCION DE PRODUCTOS POR CATEGORIA: No fue posible devolver los productos debido a " + error);
                             res.status(404).send({ status: 'NOK', message: "No fue posible devolver los productos debido a " + error });
                         }
                         finally {

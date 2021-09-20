@@ -45,8 +45,12 @@ var connection_1 = __importDefault(require("../classes/connection"));
 var enviroment_1 = require("./../global/enviroment");
 // Token
 var token_1 = __importDefault(require("../middlewares/token"));
+// Security
 var security_1 = __importDefault(require("../classes/security"));
+// Services
 var usuarios_services_1 = __importDefault(require("./usuarios-services"));
+// Log Server
+var logServer_1 = __importDefault(require("../classes/logServer"));
 var AutenticacionService = /** @class */ (function () {
     function AutenticacionService() {
     }
@@ -59,10 +63,12 @@ var AutenticacionService = /** @class */ (function () {
      */
     AutenticacionService.prototype.autenticarUsuario = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var connection, database, autenticacion, quotesCollection, usuario, security, passwordCorrect, token, tokenGenerate, idUsuario, usuariosService, isRegistered, error_1;
+            var logServer, logger, connection, database, autenticacion, quotesCollection, usuario, security, passwordCorrect, token, tokenGenerate, idUsuario, usuariosService, isRegistered, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
                         return [4 /*yield*/, connection.connectToDB()];
@@ -106,6 +112,7 @@ var AutenticacionService = /** @class */ (function () {
                     case 10: return [3 /*break*/, 13];
                     case 11:
                         error_1 = _a.sent();
+                        logger.error("No fue posible autenticar la cuenta " + autenticacion.correo + " debido a: " + error_1);
                         res.status(404).send({ status: 'NOK', message: "No fue posible autenticar su cuenta debido a " + error_1 });
                         return [3 /*break*/, 13];
                     case 12:

@@ -17,6 +17,8 @@ import Token from "./middlewares/token";
 import LogServer from "./classes/logServer";
 // Log4js
 import { Logger } from "log4js";
+// Log4js
+import log4js from 'log4js';
 // Server
 const server = new Server();
 // Inicializa el middleware de autenticacion del Token
@@ -27,6 +29,7 @@ const logServer = new LogServer();
 logServer.createLogServer();
 // Obtiene la configuracion del log MVP
 const logger: Logger = logServer.getLogConfigMVP();
+server.app.use(log4js.connectLogger(logger, { level: 'error', format: ':method :url' }));
 // Json Body Parser
 server.app.use(bodyParser.json());
 server.app.use(bodyParser.urlencoded({

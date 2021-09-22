@@ -90,6 +90,29 @@ var UsuariosController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @author Mario Tavarez
+     * @date 109/09/2021
+     * @description Devuelve los datos de registro del usuario
+     * @param req
+     * @param res
+     */
+    UsuariosController.prototype.devolverDatosRegistro = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var usuariosService, responseDevolverDatosRegistro;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        usuariosService = new usuarios_services_1.default();
+                        return [4 /*yield*/, usuariosService.devolverDatosRegistro(req, res)];
+                    case 1:
+                        responseDevolverDatosRegistro = _a.sent();
+                        // Devuelve la respuesta a la ruta
+                        return [2 /*return*/, responseDevolverDatosRegistro];
+                }
+            });
+        });
+    };
     return UsuariosController;
 }());
 exports.default = UsuariosController;

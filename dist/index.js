@@ -20,6 +20,8 @@ var cors_1 = __importDefault(require("cors"));
 var token_1 = __importDefault(require("./middlewares/token"));
 // Log Server
 var logServer_1 = __importDefault(require("./classes/logServer"));
+// Log4js
+var log4js_1 = __importDefault(require("log4js"));
 // Server
 var server = new server_1.default();
 // Inicializa el middleware de autenticacion del Token
@@ -30,6 +32,7 @@ var logServer = new logServer_1.default();
 logServer.createLogServer();
 // Obtiene la configuracion del log MVP
 var logger = logServer.getLogConfigMVP();
+server.app.use(log4js_1.default.connectLogger(logger, { level: 'error', format: ':method :url' }));
 // Json Body Parser
 server.app.use(body_parser_1.default.json());
 server.app.use(body_parser_1.default.urlencoded({

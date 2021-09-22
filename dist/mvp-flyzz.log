@@ -1,17 +1,28 @@
-[2021-09-19T21:25:51.363] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:30:57.636] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:32:05.346] [WARN] mvp - TOKEN INVÁLIDO: Request [object Object], por error JsonWebTokenError: invalid token
-[2021-09-19T21:35:40.150] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:35:46.338] [WARN] mvp - TOKEN INVÁLIDO: Request {}, por error JsonWebTokenError: invalid token
-[2021-09-19T21:36:41.095] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:36:47.137] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:36:50.673] [WARN] mvp - TOKEN INVÁLIDO: Request "::1", por error JsonWebTokenError: invalid token
-[2021-09-19T21:37:12.662] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:37:14.847] [WARN] mvp - TOKEN INVÁLIDO: Request "::1", por error JsonWebTokenError: invalid token
-[2021-09-19T21:37:27.988] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:37:29.946] [WARN] mvp - TOKEN INVÁLIDO: Request "/productos/", por error JsonWebTokenError: invalid token
-[2021-09-19T21:39:41.350] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:39:47.108] [WARN] mvp - TOKEN INVÁLIDO: Request "/productos/" Payload: [object Object], IP: ::1, PATH: /, URL: /, por error JsonWebTokenError: invalid token
-[2021-09-19T21:39:54.577] [WARN] mvp - TOKEN INVÁLIDO: Request "/productos/" Payload: [object Object], IP: ::1, PATH: /, URL: /, por error JsonWebTokenError: invalid token
-[2021-09-19T21:41:07.802] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-09-19T21:41:58.734] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-19T22:15:21.912] [WARN] mvp - TOKEN INVÁLIDO: Request /productos/ Payload: {}, IP: ::1, PATH: /, URL: /, por error JsonWebTokenError: invalid token
+[2021-09-19T22:15:21.936] [ERROR] mvp - GET /productos/
+[2021-09-19T22:15:25.429] [WARN] mvp - TOKEN VACÍO: Request /productos/ Payload: {}, IP: ::1, PATH: /, URL: /
+[2021-09-19T22:15:25.434] [ERROR] mvp - GET /productos/
+[2021-09-19T22:15:33.081] [ERROR] mvp - GET /productos/
+[2021-09-19T22:19:08.377] [ERROR] mvp - POST /usuarios/registro
+[2021-09-19T22:19:09.567] [INFO] mvp - ENVIO ASUNTO DE CORREO FLYZZ: REGISTRO DE CUENTA: Correo enviado correctamente al destinatario cccdddaaaccc@gmail.com
+[2021-09-19T22:27:41.846] [ERROR] mvp - GET /categorias/
+[2021-09-19T22:28:00.584] [ERROR] mvp - GET /productos/
+[2021-09-19T22:28:33.946] [ERROR] mvp - GET /categorias/
+[2021-09-19T22:29:23.790] [ERROR] mvp - GET /categorias/
+[2021-09-19T22:31:02.891] [ERROR] mvp - GET /categorias/
+[2021-09-21T22:56:40.537] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-21T23:05:28.888] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-21T23:07:16.077] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
+[2021-09-21T23:07:26.654] [ERROR] mvp - GET /datos-registro/61475af7d21adef97a73d06b?x-auth-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImNvcnJlbyI6Im1hcmlvam9zdWVpdHFAZ21haWwuY29tIiwiY3JlYXRlQXQiOiIyMDIxLTA5LTIyVDA0OjA3OjE1Ljk5NVoiLCJzdWJqZWN0IjoiSU5JQ0lPX1NFU0lPTiJ9LCJpYXQiOjE2MzIyODM2MzUsImV4cCI6MTYzMjM3MDAzNX0.MxFUXefDzsyXdZmFmB1sg39BZJ8LYEjBCN159l0Rcto%22,%0A%20%20%20%20%22idUsuario%22:%20%2261475af7d21adef97a73d06b
+[2021-09-21T23:08:11.741] [ERROR] mvp - GET /datos-registro/61475af7d21adef97a73d06b
+[2021-09-21T23:08:22.548] [WARN] mvp - TOKEN INVÁLIDO: Request /usuarios/datos-registro/61475af7d21adef97a73d06b Payload: {}, IP: ::1, PATH: /datos-registro/61475af7d21adef97a73d06b, URL: /datos-registro/61475af7d21adef97a73d06b, por error JsonWebTokenError: jwt malformed
+[2021-09-21T23:08:22.550] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b
+[2021-09-21T23:08:34.062] [WARN] mvp - TOKEN INVÁLIDO: Request /usuarios/datos-registro/61475af7d21adef97a73d06b Payload: {}, IP: ::1, PATH: /datos-registro/61475af7d21adef97a73d06b, URL: /datos-registro/61475af7d21adef97a73d06b, por error JsonWebTokenError: jwt malformed
+[2021-09-21T23:08:34.063] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b
+[2021-09-21T23:08:35.458] [WARN] mvp - TOKEN INVÁLIDO: Request /usuarios/datos-registro/61475af7d21adef97a73d06b Payload: {}, IP: ::1, PATH: /datos-registro/61475af7d21adef97a73d06b, URL: /datos-registro/61475af7d21adef97a73d06b, por error JsonWebTokenError: jwt malformed
+[2021-09-21T23:08:35.461] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b
+[2021-09-21T23:10:11.268] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
+[2021-09-21T23:10:49.407] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b
+[2021-09-21T23:12:39.604] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-21T23:12:49.201] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
+[2021-09-21T23:13:09.426] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b

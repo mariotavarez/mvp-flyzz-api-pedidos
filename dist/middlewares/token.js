@@ -68,7 +68,7 @@ var Token = /** @class */ (function () {
                                 createAt: new Date(),
                                 subject: constants_1.ASUNTO_TOKEN
                             }
-                        }, enviroment_1.TOKEN, { expiresIn: '24h' })];
+                        }, enviroment_1.TOKEN, { expiresIn: '30d' })];
                     case 1:
                         token = _a.sent();
                         return [2 /*return*/, token];

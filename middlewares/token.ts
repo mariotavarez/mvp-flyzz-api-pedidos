@@ -33,7 +33,7 @@ export default class Token {
                 createAt: new Date(),
                 subject: ASUNTO_TOKEN
             }
-        }, TOKEN, { expiresIn: '24h' });
+        }, TOKEN, { expiresIn: '30d' });
 
         return token;
     }

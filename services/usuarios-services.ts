@@ -164,5 +164,44 @@ export default class UsuariosService {
             connection.client.close();
         }
     }
+    /**
+     * @author Mario Tavarez
+     * @date 21/09/2021
+     * @description Devuelve los datos de registro del usuario
+     * @param req 
+     * @param res 
+     */
+    public async devolverDatosRegistro(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Obtiene el id usuario
+        const { idUsuario } = req.params;
+        // Inicializa el objeto de BD de MongoDB
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion
+        const quotesCollection = database.collection(COLLECTIONS.informacionUsuarios);
+        try {
+            // Registra los datos iniciales del usuario
+            const datosRegistro: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOne({ idUsuario: idUsuario });
+            // Valida si devuelve los datos del usuario
+            if (datosRegistro) {
+                res.status(200).send({ status: 'OK', datosRegistro: datosRegistro });
+            } else {
+                res.status(404).send({ status: 'NOK', message: `No se encontraron los datos de registro del usuario, asegurese de registrarlos` });
+            }
+
+        } catch (error) {
+            logger.error(`DEVOLVER DATOS REGISTRO USUARIO: No fue posible devolver los datos de registro del usuario ${idUsuario} debido a un error inesperado: ${error}`);
+            res.status(500).send({ status: 'NOK', message: 'No fue posible devolver los datos de registro del usuario debido a un error inesperado' });
+        } finally {
+            connection.client.close();
+        }
+    }
 
 }

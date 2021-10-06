@@ -26,3 +26,40 @@
 [2021-09-21T23:12:39.604] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
 [2021-09-21T23:12:49.201] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
 [2021-09-21T23:13:09.426] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b
+[2021-09-21T23:24:17.261] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
+[2021-09-21T23:24:34.239] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
+[2021-09-22T21:27:28.264] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T21:28:32.526] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T21:43:32.506] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:04:26.907] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:04:38.127] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:04:55.125] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:05:01.685] [ERROR] mvp - GET /usuarios/datos-registro/61475af7d21adef97a73d06b
+[2021-09-22T22:05:08.886] [WARN] mvp - TOKEN INVÁLIDO: Request /productos/ Payload: {}, IP: ::1, PATH: /, URL: /, por error TokenExpiredError: jwt expired
+[2021-09-22T22:05:08.887] [ERROR] mvp - GET /productos/
+[2021-09-22T22:05:23.995] [ERROR] mvp - GET /productos/
+[2021-09-22T22:07:32.418] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:08:23.218] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:12:57.901] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:14:47.773] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:14:56.769] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:20:35.345] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:21:49.710] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:24:20.267] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:27:19.468] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:30:49.789] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:33:10.041] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:41:01.719] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:46:29.082] [WARN] mvp - TOKEN INVÁLIDO: Request /pedidos/crear-pedido Payload: {"idUsuario":"6147c3e0ba9c9b360b1556a0","productos":[{"idProducto":"6146924dc1a067939d9004e7","cantidad":1,"costoVenta":15,"notasAdicionales":"Me gustaría unos maicitos tradicionales"}],"estatus":"EN PROCESO","total":0,"idDrone":"092390392030230203920320","fechaCreacion":"22/09/2021","fechaModificacion":"22/09/2021"}, IP: ::1, PATH: /crear-pedido, URL: /crear-pedido, por error JsonWebTokenError: jwt malformed
+[2021-09-22T22:46:29.086] [ERROR] mvp - POST /pedidos/crear-pedido
+[2021-09-22T22:46:48.992] [WARN] mvp - TOKEN INVÁLIDO: Request /pedidos/crear-pedido Payload: {"idUsuario":"6147c3e0ba9c9b360b1556a0","productos":[{"idProducto":"6146924dc1a067939d9004e7","cantidad":1,"costoVenta":15,"notasAdicionales":"Me gustaría unos maicitos tradicionales"}],"estatus":"EN PROCESO","total":0,"idDrone":"092390392030230203920320","fechaCreacion":"22/09/2021","fechaModificacion":"22/09/2021"}, IP: ::1, PATH: /crear-pedido, URL: /crear-pedido, por error JsonWebTokenError: jwt malformed
+[2021-09-22T22:46:48.994] [ERROR] mvp - POST /pedidos/crear-pedido
+[2021-09-22T22:47:19.647] [ERROR] mvp - POST /pedidos/crear-pedido
+[2021-09-22T22:48:45.900] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:49:01.935] [ERROR] mvp - POST /pedidos/crear-pedido
+[2021-09-22T22:49:19.290] [ERROR] mvp - POST /pedidos/crear-pedido
+[2021-09-22T22:51:31.161] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-09-22T22:52:21.830] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-01T21:56:47.096] [ERROR] mvp - POST /usuarios/registro
+[2021-10-01T21:56:48.776] [INFO] mvp - ENVIO ASUNTO DE CORREO FLYZZ: REGISTRO DE CUENTA: Correo enviado correctamente al destinatario mariojosueitq@gmail.com
+[2021-10-02T11:43:30.962] [ERROR] mvp - POST /pedidos/crear-pedido

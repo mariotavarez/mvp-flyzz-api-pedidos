@@ -7,6 +7,8 @@ import autenticacionRouter from "./routes/autenticacion-route";
 import usuariosRouter from "./routes/usuarios-route";
 import categoriasRouter from "./routes/categorias-route";
 import productosRouter from "./routes/productos-route";
+import pedidosRouter from "./routes/pedidos-route";
+import bannersRouter from "./routes/banners-route";
 // Body Parser
 import bodyParser from 'body-parser';
 // Cors
@@ -46,6 +48,10 @@ server.app.use('/usuarios', usuariosRouter);
 server.app.use('/categorias', token.validateToken, categoriasRouter);
 // Productos Routes
 server.app.use('/productos', token.validateToken, productosRouter);
+// Pedidos Routes
+server.app.use('/pedidos', token.validateToken, pedidosRouter);
+// Banners Routes
+server.app.use('/banners', token.validateToken, bannersRouter);
 
 // Inicio de servidor
 server.start(() => {

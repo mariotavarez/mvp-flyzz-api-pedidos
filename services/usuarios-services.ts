@@ -65,7 +65,7 @@ export default class UsuariosService {
                 const mail = new Mail();
                 // Envia el email al usuario registrado
                 await mail.sendMail(altaUsuario.correo, PLANTILLAS_CORREO.registro).then(email => {
-                    res.status(200).send({ status: 'OK', message: 'Usuario dado de alta correctamente' });
+                    res.status(200).send({ status: 'OK', message: 'Felicidades, tu cuenta se ha registrado exitosamente, se le enviará un correo de bienvenida a la brevedad' });
                 }).catch(error => {
                     logger.error(`ALTA USUARIOS: Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la dirección de correo ${altaUsuario.correo} debido a ${error.message}`);
                     res.status(200).send({ status: 'NOK', message: `Usuario dada de alta correctamente, sin enbargo no fue posible enviar el correo de registro a la dirección de correo ${altaUsuario.correo}` });

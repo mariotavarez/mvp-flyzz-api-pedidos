@@ -54,7 +54,7 @@ var LogServer = /** @class */ (function () {
             return __generator(this, function (_a) {
                 // Configuracion de log
                 log4js_1.default.configure({
-                    appenders: { mvp: { type: "file", filename: "mvp-flyzz.log" } },
+                    appenders: { mvp: { type: "file", filename: "mvp-flyzz.log", pattern: 'dd-MM-yyyy-hh', compress: true } },
                     categories: { default: { appenders: ["mvp"], level: "info" } }
                 });
                 return [2 /*return*/];

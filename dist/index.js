@@ -34,7 +34,7 @@ var logServer = new logServer_1.default();
 logServer.createLogServer();
 // Obtiene la configuracion del log MVP
 var logger = logServer.getLogConfigMVP();
-server.app.use(log4js_1.default.connectLogger(logger, { level: 'error', format: ':method :url' }));
+server.app.use(log4js_1.default.connectLogger(logger, { level: 'info', format: ':method :url' }));
 // Json Body Parser
 server.app.use(body_parser_1.default.json());
 server.app.use(body_parser_1.default.urlencoded({

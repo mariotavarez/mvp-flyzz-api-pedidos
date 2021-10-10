@@ -14,7 +14,7 @@ export default class LogServer {
     public async createLogServer(): Promise<void> {
         // Configuracion de log
         log4js.configure({
-            appenders: { mvp: { type: "file", filename: "mvp-flyzz.log" } },
+            appenders: { mvp: { type: "file", filename: "mvp-flyzz.log", pattern: 'dd-MM-yyyy-hh', compress: true } },
             categories: { default: { appenders: ["mvp"], level: "info" } }
           });
     }

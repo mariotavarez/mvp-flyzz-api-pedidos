@@ -31,7 +31,7 @@ const logServer = new LogServer();
 logServer.createLogServer();
 // Obtiene la configuracion del log MVP
 const logger: Logger = logServer.getLogConfigMVP();
-server.app.use(log4js.connectLogger(logger, { level: 'error', format: ':method :url' }));
+server.app.use(log4js.connectLogger(logger, { level: 'info', format: ':method :url' }));
 // Json Body Parser
 server.app.use(bodyParser.json());
 server.app.use(bodyParser.urlencoded({

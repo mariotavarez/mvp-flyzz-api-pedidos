@@ -55,6 +55,22 @@ export default class UsuariosController {
         return responseDevolverDatosRegistro;
 
     }
+    /**
+     * @author Mario Tavarez
+     * @date 109/09/2021
+     * @description Devuelve los datos de registro del usuario
+     * @param req 
+     * @param res 
+     */
+    public async actualzarDatosRegistro(req: Request, res: Response) {
+        // Inicializa el servicio de usuarios
+        const usuariosService = new UsuariosService();
+        // Obtiene la respuesta del servicio de devolver datos actualizacion de datos del usuario
+        const responseActualzarDatosRegistro = await usuariosService.actualizarDatosRegistro(req, res);
+        // Devuelve la respuesta a la ruta
+        return responseActualzarDatosRegistro;
+
+    }
 
 
 }

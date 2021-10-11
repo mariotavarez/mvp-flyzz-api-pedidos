@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 // Constants
 import { PLANTILLAS_CORREO } from '../global/constants';
 // Connection DB
-import { Collection } from "mongodb";
+import { Collection, ObjectID } from "mongodb";
 // Connection Database
 import Connection from "../classes/connection";
 // Database
@@ -199,6 +199,54 @@ export default class UsuariosService {
         } catch (error) {
             logger.error(`DEVOLVER DATOS REGISTRO USUARIO: No fue posible devolver los datos de registro del usuario ${idUsuario} debido a un error inesperado: ${error}`);
             res.status(500).send({ status: 'NOK', message: 'No fue posible devolver los datos de registro del usuario debido a un error inesperado' });
+        } finally {
+            connection.client.close();
+        }
+    }
+    /**
+     * @author Mario Tavarez
+     * @date 10/10/2021
+     * @description Actualiza los datos del usuario
+     * @param req 
+     * @param res 
+     */
+    public async actualizarDatosRegistro(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Obtiene el id usuario
+        const datosUsuario: RegistroDatosInicialesModel = req.body;
+        // Inicializa el objeto de BD de MongoDB
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion
+        const quotesCollection = database.collection(COLLECTIONS.informacionUsuarios);
+        try {
+            // Se procede a actualizar los datos del usuario
+            const datosIniciales: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOne({ 'idUsuario': datosUsuario.idUsuario });
+            // Valida que exista el usuario
+            if ( datosIniciales) {
+                // Valida si se han actualzado los datos del usuario correctamente
+                // Se procede a actualizar los datos del usuario
+                const actualizacionDatos: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOneAndUpdate({ 'idUsuario': datosUsuario.idUsuario }, { $set: datosUsuario });
+                // Valida si se han actualzado los datos del usuario correctamente
+                if (actualizacionDatos) {
+                    res.status(200).send({ status: 'OK', message: `Sus datos se han actualizado correctamente` });
+                } else {
+                    res.status(300).send({ status: 'NOK', message: `No fue posible actualizar sus datos ya que su usuario no ha sido dado de alta` });
+                }
+            } else {
+                res.status(404).send({ status: 'NOK', message: `Este usuario no se encuentra registrado, es necesario estar registrado para poder realizar la actualización de sus datos` });
+            }
+        } catch (error) {
+            console.log(error);
+            
+            logger.error(`ACTUALIZAR DATOS REGISTRO USUARIO: No fue posible actualizar los datos de registro del usuario ${datosUsuario.idUsuario} debido a un error inesperado: ${error}`);
+            res.status(500).send({ status: 'NOK', message: 'No fue posible actualizar los datos de registro debido a un error inesperado' });
         } finally {
             connection.client.close();
         }

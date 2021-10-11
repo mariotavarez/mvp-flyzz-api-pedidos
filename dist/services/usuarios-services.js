@@ -283,6 +283,66 @@ var UsuariosService = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @author Mario Tavarez
+     * @date 10/10/2021
+     * @description Actualiza los datos del usuario
+     * @param req
+     * @param res
+     */
+    UsuariosService.prototype.actualizarDatosRegistro = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, datosUsuario, connection, database, quotesCollection, datosIniciales, actualizacionDatos, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        datosUsuario = req.body;
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.informacionUsuarios);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 7, 8, 9]);
+                        return [4 /*yield*/, quotesCollection.findOne({ 'idUsuario': datosUsuario.idUsuario })];
+                    case 3:
+                        datosIniciales = _a.sent();
+                        if (!datosIniciales) return [3 /*break*/, 5];
+                        return [4 /*yield*/, quotesCollection.findOneAndUpdate({ 'idUsuario': datosUsuario.idUsuario }, { $set: datosUsuario })];
+                    case 4:
+                        actualizacionDatos = _a.sent();
+                        // Valida si se han actualzado los datos del usuario correctamente
+                        if (actualizacionDatos) {
+                            res.status(200).send({ status: 'OK', message: "Sus datos se han actualizado correctamente" });
+                        }
+                        else {
+                            res.status(300).send({ status: 'NOK', message: "No fue posible actualizar sus datos ya que su usuario no ha sido dado de alta" });
+                        }
+                        return [3 /*break*/, 6];
+                    case 5:
+                        res.status(404).send({ status: 'NOK', message: "Este usuario no se encuentra registrado, es necesario estar registrado para poder realizar la actualizaci\u00F3n de sus datos" });
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 9];
+                    case 7:
+                        error_3 = _a.sent();
+                        console.log(error_3);
+                        logger.error("ACTUALIZAR DATOS REGISTRO USUARIO: No fue posible actualizar los datos de registro del usuario " + datosUsuario.idUsuario + " debido a un error inesperado: " + error_3);
+                        res.status(500).send({ status: 'NOK', message: 'No fue posible actualizar los datos de registro debido a un error inesperado' });
+                        return [3 /*break*/, 9];
+                    case 8:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 9: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return UsuariosService;
 }());
 exports.default = UsuariosService;

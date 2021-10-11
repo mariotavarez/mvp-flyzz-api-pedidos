@@ -16,7 +16,9 @@ const token = new Token();
 usuariosRouter.post('/registro', usuariosController.altaUsuario);
 // Alta de datos iniciales
 usuariosRouter.post('/registro-datos-iniciales', token.validateToken, usuariosController.registrarDatosIniciales);
-// Alta de datos iniciales
+// Devolucion de datos iniciales
 usuariosRouter.get('/datos-registro/:idUsuario', token.validateToken, usuariosController.devolverDatosRegistro);
+// Actualizacion de datos iniciales
+usuariosRouter.put('/actualizar-datos-iniciales', token.validateToken, usuariosController.actualzarDatosRegistro);
 
 export default usuariosRouter;

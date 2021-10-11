@@ -1,24 +1,3 @@
-[2021-10-05T21:21:37.698] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:28:11.490] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:29:27.831] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:29:52.876] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:30:08.978] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:31:42.579] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:32:07.852] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:35:33.197] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:36:09.175] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:45:10.261] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:45:41.176] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-05T21:47:36.521] [ERROR] mvp - GET /banners/
-[2021-10-05T21:48:39.850] [ERROR] mvp - GET /banners/
-[2021-10-08T22:04:54.596] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-09T21:33:37.019] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
-[2021-10-09T21:34:04.269] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
-[2021-10-09T21:34:06.776] [ERROR] mvp - POST /autenticacion/iniciar-sesion/
-[2021-10-09T21:35:00.606] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-09T21:35:09.258] [INFO] mvp - POST /autenticacion/iniciar-sesion/
-[2021-10-09T21:36:55.930] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-09T21:37:05.360] [INFO] mvp - POST /autenticacion/iniciar-sesion/
-[2021-10-09T21:37:38.141] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-09T21:38:07.708] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-09T21:38:21.134] [INFO] mvp - POST /autenticacion/iniciar-sesion/
+[2021-10-10T22:26:26.199] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-10T22:27:37.676] [INFO] mvp - POST /autenticacion/iniciar-sesion/
+[2021-10-10T22:28:55.672] [INFO] mvp - POST /usuarios/registro-datos-iniciales

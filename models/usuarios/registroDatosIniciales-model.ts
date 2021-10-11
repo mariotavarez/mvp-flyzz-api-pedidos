@@ -3,6 +3,7 @@ export interface RegistroDatosInicialesModel {
     apellidoPaterno: string;
     apellidoMaterno: string;
     fechaNacimiento: string;
+    sexo: string;
     calle: string;
     noExt: string;
     noInt: string;

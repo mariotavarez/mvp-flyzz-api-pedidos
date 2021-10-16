@@ -14,6 +14,8 @@ var categorias_route_1 = __importDefault(require("./routes/categorias-route"));
 var productos_route_1 = __importDefault(require("./routes/productos-route"));
 var pedidos_route_1 = __importDefault(require("./routes/pedidos-route"));
 var banners_route_1 = __importDefault(require("./routes/banners-route"));
+var usuarios_control_route_1 = __importDefault(require("./routes/control/usuarios-control-route"));
+var autenticacion_control_route_1 = __importDefault(require("./routes/control/autenticacion-control-route"));
 // Body Parser
 var body_parser_1 = __importDefault(require("body-parser"));
 // Cors
@@ -54,6 +56,10 @@ server.app.use('/productos', token.validateToken, productos_route_1.default);
 server.app.use('/pedidos', token.validateToken, pedidos_route_1.default);
 // Banners Routes
 server.app.use('/banners', token.validateToken, banners_route_1.default);
+// Usuarios de control
+server.app.use('/control/usuarios', usuarios_control_route_1.default);
+// Usuarios de control
+server.app.use('/control/autenticacion', autenticacion_control_route_1.default);
 // Inicio de servidor
 server.start(function () {
     logger.info("INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto " + enviroment_1.SERVER_PORT);

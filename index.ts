@@ -9,6 +9,8 @@ import categoriasRouter from "./routes/categorias-route";
 import productosRouter from "./routes/productos-route";
 import pedidosRouter from "./routes/pedidos-route";
 import bannersRouter from "./routes/banners-route";
+import usuariosControlRouter from "./routes/control/usuarios-control-route";
+import autenticacionControlRouter from "./routes/control/autenticacion-control-route";
 // Body Parser
 import bodyParser from 'body-parser';
 // Cors
@@ -38,7 +40,7 @@ server.app.use(bodyParser.urlencoded({
   extended: true
 }));
 // Cors
-server.app.use(cors({credentials: false, origin: '*', methods: ['GET','POST','DELETE','UPDATE']}));
+server.app.use(cors({ credentials: false, origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE'] }));
 
 // Autenticacion Routes
 server.app.use('/autenticacion', autenticacionRouter);
@@ -52,10 +54,15 @@ server.app.use('/productos', token.validateToken, productosRouter);
 server.app.use('/pedidos', token.validateToken, pedidosRouter);
 // Banners Routes
 server.app.use('/banners', token.validateToken, bannersRouter);
+// Usuarios de control
+server.app.use('/control/usuarios', usuariosControlRouter);
+// Usuarios de control
+server.app.use('/control/autenticacion', autenticacionControlRouter);
+
 
 // Inicio de servidor
 server.start(() => {
   logger.info(`INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`);
-	console.log(`MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`)
+  console.log(`MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`)
 });
 

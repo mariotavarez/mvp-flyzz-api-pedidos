@@ -1,26 +1,11 @@
-[2021-10-10T23:00:03.047] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:00:54.998] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:02:32.848] [WARN] mvp - TOKEN VACÍO: Request /usuarios/actualizar-datos-iniciales Payload: {"nombres":"Mario Josue","apellidoPaterno":"Tavarez","apellidoMaterno":"Mendoza","fechaNacimiento":"27/07/1994","sexo":"H","calle":"Paseos del Bosque, Condominio Abedul","noExt":"5","noInt":"64","cp":76910,"idUsuario":"6163b52761baca18a65ed873","fechaCreacion":"19/09/2021","fechaModificacion":"19/09/2021"}, IP: ::1, PATH: /actualizar-datos-iniciales, URL: /actualizar-datos-iniciales
-[2021-10-10T23:02:32.864] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:03:10.070] [ERROR] mvp - ACTUALIZAR DATOS REGISTRO USUARIO: No fue posible actualizar los datos de registro del usuario 6163b52761baca18a65ed873 debido a un error inesperado: MongoInvalidArgumentError: Update document requires atomic operators
-[2021-10-10T23:03:10.079] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:03:41.309] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:03:46.189] [ERROR] mvp - ACTUALIZAR DATOS REGISTRO USUARIO: No fue posible actualizar los datos de registro del usuario 6163b52761baca18a65ed873 debido a un error inesperado: MongoInvalidArgumentError: Update document requires atomic operators
-[2021-10-10T23:03:46.211] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:05:45.865] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:06:08.694] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:06:16.369] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:06:46.790] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:07:07.646] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:08:36.029] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:11:25.373] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:12:39.102] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:12:40.909] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:12:51.944] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:13:07.545] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:13:09.009] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:15:19.442] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:15:30.952] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:15:35.626] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-10T23:15:45.030] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
-[2021-10-10T23:15:58.959] [INFO] mvp - PUT /usuarios/actualizar-datos-iniciales
+[2021-10-16T13:00:03.649] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
+[2021-10-16T13:01:32.082] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
+[2021-10-16T13:02:24.837] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T13:22:50.926] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T13:25:34.574] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T13:25:46.340] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
+[2021-10-16T13:26:11.782] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T13:26:15.218] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
+[2021-10-16T13:27:04.764] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
+[2021-10-16T13:27:10.022] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
+[2021-10-16T13:29:11.381] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201

@@ -4,5 +4,6 @@ export interface usuarioControlModel {
     nombre: string;
     apellidoPaterno: string;
     apellidoMaterno: string;
+    imagen: string;
     fechaCreacion: string;
 }

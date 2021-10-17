@@ -1,11 +1,4 @@
-[2021-10-16T13:00:03.649] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
-[2021-10-16T13:01:32.082] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
-[2021-10-16T13:02:24.837] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-16T13:22:50.926] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-16T13:25:34.574] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-16T13:25:46.340] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
-[2021-10-16T13:26:11.782] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-16T13:26:15.218] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
-[2021-10-16T13:27:04.764] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
-[2021-10-16T13:27:10.022] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/
-[2021-10-16T13:29:11.381] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T19:47:09.015] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T19:48:34.689] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-16T19:48:50.811] [INFO] mvp - POST /control/usuarios/registro/
+[2021-10-16T19:49:16.811] [INFO] mvp - POST /control/autenticacion/iniciar-sesion/

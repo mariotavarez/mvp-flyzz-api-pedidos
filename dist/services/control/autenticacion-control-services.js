@@ -100,6 +100,7 @@ var AutenticacionControlService = /** @class */ (function () {
                             correo: usuario.correo,
                             apellidoPaterno: usuario.apellidoPaterno,
                             apellidoMaterno: usuario.apellidoMaterno,
+                            imagen: usuario.imagen,
                             fechaCreacion: usuario.fechaCreacion
                         };
                         // Enviar token de usuario

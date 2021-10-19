@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 // Constants
 import { PLANTILLAS_CORREO } from '../global/constants';
 // Connection DB
-import { Collection, ObjectID } from "mongodb";
+import { Collection, Db, ObjectID } from "mongodb";
 // Connection Database
 import Connection from "../classes/connection";
 // Database
@@ -229,7 +229,7 @@ export default class UsuariosService {
             // Se procede a actualizar los datos del usuario
             const datosIniciales: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOne({ 'idUsuario': datosUsuario.idUsuario });
             // Valida que exista el usuario
-            if ( datosIniciales) {
+            if (datosIniciales) {
                 // Valida si se han actualzado los datos del usuario correctamente
                 // Se procede a actualizar los datos del usuario
                 const actualizacionDatos: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOneAndUpdate({ 'idUsuario': datosUsuario.idUsuario }, { $set: datosUsuario });
@@ -244,12 +244,108 @@ export default class UsuariosService {
             }
         } catch (error) {
             console.log(error);
-            
+
             logger.error(`ACTUALIZAR DATOS REGISTRO USUARIO: No fue posible actualizar los datos de registro del usuario ${datosUsuario.idUsuario} debido a un error inesperado: ${error}`);
             res.status(500).send({ status: 'NOK', message: 'No fue posible actualizar los datos de registro debido a un error inesperado' });
         } finally {
             connection.client.close();
         }
+
     }
+
+
+    /**
+     * @author Mario Tavarez
+     * @description Devuelve todos los usuarios registrados
+     * @date 17/10/2021
+     * @param req 
+     * @param res 
+     */
+    public async getUsuariosRegistrados(res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Inicializa el objeto de BD de MongoDB
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion
+        const quotesCollection = database.collection(COLLECTIONS.informacionUsuarios);
+
+        try {
+            // Se procede a actualizar los datos del usuario
+            let datosUsuarios: Collection<any> | any = await quotesCollection.find({}).toArray();
+            // Valida que exista el usuario
+            if (datosUsuarios) {
+                let informacionUsuario: any[] = [];
+                // Recorre los datos obtenidos del usuario
+                for (const usuario of datosUsuarios) {
+                    // let indice = 0;
+                    // Consulta el correo del usuario
+                    const correo = await this.getCorreoUsuarioById(usuario.idUsuario, database, logger);
+                    // Crea un objeto auxiliar para guardar los datos del usuario y agregar el correo
+                    let informacionUsuarioAuxiliar = {
+                        _id: usuario._id,
+                        nombres: usuario.nombres,
+                        apellidoPaterno: usuario.apellidoPaterno,
+                        apellidoMaterno: usuario.apellidoMaterno,
+                        fechaNacimiento: usuario.fechaNacimiento,
+                        sexo: usuario.sexo,
+                        calle: usuario.calle,
+                        noExt: usuario.noExt,
+                        noInt: usuario.noInt,
+                        cp: usuario.cp,
+                        latitud: usuario.latitud,
+                        longitud: usuario.longitud,
+                        idUsuario: usuario.idUsuario,
+                        fechaCreacion: usuario.fechaCreacion,
+                        fechaModificacion: usuario.fechaModificacion,
+                        correo: correo
+                    }
+                    // Setea la informacion auxiliar y la agrega al objeto definitivo que se enviara por response
+                    informacionUsuario.push(informacionUsuarioAuxiliar);
+                }
+                // Valida si se han actualzado los datos del usuario correctamente
+                res.status(200).send({ status: 'OK', usuarios: informacionUsuario });
+            } else {
+                res.status(404).send({ status: 'NOK', message: `Este usuario no se encuentra registrado, es necesario estar registrado para poder realizar la actualización de sus datos` });
+            }
+        } catch (error) {
+            logger.error(`GET USUARIOS REGISTRADOS: No fue posible devolver los usuarios registrados debido a: ${error}`);
+            res.status(500).send({ status: 'NOK', message: 'No fue posible devolver los usuarios registrados debido a un error inesperado' });
+        } finally {
+            connection.client.close();
+        }
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 17/10/2021
+     * @description Devuelve el correo del usuario
+     * @param idUsuario 
+     * @param database 
+     * @param logger 
+     */
+    public async getCorreoUsuarioById(idUsuario: string, database: Db, logger: Logger) {
+        // Collection
+        const quotesCollection = database.collection(COLLECTIONS.usuarios);
+        let correoUsuario = null;
+        try {
+            const datosUsuario: Collection<any> | any = await quotesCollection.findOne({ _id: new ObjectID(idUsuario) });
+            // Valida si existe la informacion del usuario
+            if (datosUsuario) {
+                correoUsuario = datosUsuario.correo;
+            } else {
+                logger.error(`GET CORREO BY ID: No fue posible recuperar el correo del usuario ${idUsuario} debido a que no se encuentra registrado`);
+            }
+        } catch (error) {
+            logger.error(`GET CORREO BY ID: No fue posible recuperar el correo del usuario ${idUsuario} debido a: ${error}`);
+        }
+        return correoUsuario;
+    }
+
 
 }

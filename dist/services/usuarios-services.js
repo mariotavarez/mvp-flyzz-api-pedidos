@@ -43,6 +43,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var enviroment_1 = require("./../global/enviroment");
 // Constants
 var constants_1 = require("../global/constants");
+// Connection DB
+var mongodb_1 = require("mongodb");
 // Connection Database
 var connection_1 = __importDefault(require("../classes/connection"));
 // Database
@@ -339,6 +341,129 @@ var UsuariosService = /** @class */ (function () {
                         connection.client.close();
                         return [7 /*endfinally*/];
                     case 9: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @description Devuelve todos los usuarios registrados
+     * @date 17/10/2021
+     * @param req
+     * @param res
+     */
+    UsuariosService.prototype.getUsuariosRegistrados = function (res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, connection, database, quotesCollection, datosUsuarios, informacionUsuario, _i, datosUsuarios_1, usuario, correo, informacionUsuarioAuxiliar, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.informacionUsuarios);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 10, 11, 12]);
+                        return [4 /*yield*/, quotesCollection.find({}).toArray()];
+                    case 3:
+                        datosUsuarios = _a.sent();
+                        if (!datosUsuarios) return [3 /*break*/, 8];
+                        informacionUsuario = [];
+                        _i = 0, datosUsuarios_1 = datosUsuarios;
+                        _a.label = 4;
+                    case 4:
+                        if (!(_i < datosUsuarios_1.length)) return [3 /*break*/, 7];
+                        usuario = datosUsuarios_1[_i];
+                        return [4 /*yield*/, this.getCorreoUsuarioById(usuario.idUsuario, database, logger)];
+                    case 5:
+                        correo = _a.sent();
+                        informacionUsuarioAuxiliar = {
+                            _id: usuario._id,
+                            nombres: usuario.nombres,
+                            apellidoPaterno: usuario.apellidoPaterno,
+                            apellidoMaterno: usuario.apellidoMaterno,
+                            fechaNacimiento: usuario.fechaNacimiento,
+                            sexo: usuario.sexo,
+                            calle: usuario.calle,
+                            noExt: usuario.noExt,
+                            noInt: usuario.noInt,
+                            cp: usuario.cp,
+                            latitud: usuario.latitud,
+                            longitud: usuario.longitud,
+                            idUsuario: usuario.idUsuario,
+                            fechaCreacion: usuario.fechaCreacion,
+                            fechaModificacion: usuario.fechaModificacion,
+                            correo: correo
+                        };
+                        // Setea la informacion auxiliar y la agrega al objeto definitivo que se enviara por response
+                        informacionUsuario.push(informacionUsuarioAuxiliar);
+                        _a.label = 6;
+                    case 6:
+                        _i++;
+                        return [3 /*break*/, 4];
+                    case 7:
+                        // Valida si se han actualzado los datos del usuario correctamente
+                        res.status(200).send({ status: 'OK', usuarios: informacionUsuario });
+                        return [3 /*break*/, 9];
+                    case 8:
+                        res.status(404).send({ status: 'NOK', message: "Este usuario no se encuentra registrado, es necesario estar registrado para poder realizar la actualizaci\u00F3n de sus datos" });
+                        _a.label = 9;
+                    case 9: return [3 /*break*/, 12];
+                    case 10:
+                        error_4 = _a.sent();
+                        logger.error("GET USUARIOS REGISTRADOS: No fue posible devolver los usuarios registrados debido a: " + error_4);
+                        res.status(500).send({ status: 'NOK', message: 'No fue posible devolver los usuarios registrados debido a un error inesperado' });
+                        return [3 /*break*/, 12];
+                    case 11:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 12: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @date 17/10/2021
+     * @description Devuelve el correo del usuario
+     * @param idUsuario
+     * @param database
+     * @param logger
+     */
+    UsuariosService.prototype.getCorreoUsuarioById = function (idUsuario, database, logger) {
+        return __awaiter(this, void 0, void 0, function () {
+            var quotesCollection, correoUsuario, datosUsuario, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.usuarios);
+                        correoUsuario = null;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, quotesCollection.findOne({ _id: new mongodb_1.ObjectID(idUsuario) })];
+                    case 2:
+                        datosUsuario = _a.sent();
+                        // Valida si existe la informacion del usuario
+                        if (datosUsuario) {
+                            correoUsuario = datosUsuario.correo;
+                        }
+                        else {
+                            logger.error("GET CORREO BY ID: No fue posible recuperar el correo del usuario " + idUsuario + " debido a que no se encuentra registrado");
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_5 = _a.sent();
+                        logger.error("GET CORREO BY ID: No fue posible recuperar el correo del usuario " + idUsuario + " debido a: " + error_5);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/, correoUsuario];
                 }
             });
         });

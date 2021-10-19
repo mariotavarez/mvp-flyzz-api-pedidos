@@ -23,4 +23,6 @@ usuariosRouter.post('/registro-datos-iniciales', token.validateToken, usuariosCo
 usuariosRouter.get('/datos-registro/:idUsuario', token.validateToken, usuariosController.devolverDatosRegistro);
 // Actualizacion de datos iniciales
 usuariosRouter.put('/actualizar-datos-iniciales', token.validateToken, usuariosController.actualzarDatosRegistro);
+// Devuelve todos los usuarios registrados
+usuariosRouter.get('/', token.validateToken, usuariosController.getUsuariosRegistrados);
 exports.default = usuariosRouter;

@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 // Services
 import UsuariosService from '../services/usuarios-services';
 
-export default class UsuariosController { 
+export default class UsuariosController {
 
-    constructor() {}
+    constructor() { }
 
     /**
      * @author Mario Tavarez
@@ -57,7 +57,7 @@ export default class UsuariosController {
     }
     /**
      * @author Mario Tavarez
-     * @date 109/09/2021
+     * @date 10/09/2021
      * @description Devuelve los datos de registro del usuario
      * @param req 
      * @param res 
@@ -70,6 +70,21 @@ export default class UsuariosController {
         // Devuelve la respuesta a la ruta
         return responseActualzarDatosRegistro;
 
+    }
+    /**
+     * @author Mario Tavarez
+     * @date 17/17/2021
+     * @description Devuelve todos los usuarios registrados
+     * @param req 
+     * @param res 
+     */
+    public async getUsuariosRegistrados(req: Request, res: Response) {
+        // Inicializa el servicio de usuarios
+        const usuariosService = new UsuariosService();
+        // Obtiene la respuesta del servicio de usuario registrados
+        const responseActualzarDatosRegistro = await usuariosService.getUsuariosRegistrados(res);
+        // Devuelve la respuesta a la ruta
+        return responseActualzarDatosRegistro;
     }
 
 

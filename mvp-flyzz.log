@@ -1,6 +1,21 @@
-[2021-10-18T23:24:38.842] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-18T23:25:23.401] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-18T23:29:34.662] [INFO] mvp - POST /usuarios/registro-datos-iniciales
-[2021-10-18T23:30:02.245] [INFO] mvp - POST /usuarios/registro-datos-iniciales
-[2021-10-18T23:30:19.533] [INFO] mvp - POST /usuarios/registro-datos-iniciales
-[2021-10-18T23:31:37.304] [INFO] mvp - GET /usuarios/datos-registro/616e48f37d4213d263be3da0
+[2021-10-19T23:02:17.772] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:03:04.386] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:03:16.868] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:03:42.881] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:03:47.644] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:04:28.682] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:04:36.216] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:05:17.815] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:05:22.836] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:05:38.128] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:05:44.462] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:06:14.683] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:06:23.705] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:06:39.619] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:06:52.118] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:06:59.493] [ERROR] mvp - GET PEDIDOS: No fue posible devolver el listado de pedidos debido a: TypeError: res.status is not a function
+[2021-10-19T23:07:16.452] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:07:34.550] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:07:39.737] [INFO] mvp - GET /pedidos/
+[2021-10-19T23:08:00.279] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-19T23:08:18.515] [INFO] mvp - GET /pedidos/

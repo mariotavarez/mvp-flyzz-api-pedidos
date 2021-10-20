@@ -46,6 +46,29 @@ var PedidosController = /** @class */ (function () {
     }
     /**
      * @author Mario Tavarez
+     * @date 19/10/2021
+     * @description Devuelve el listado de pedidos
+     * @param res
+     * @returns
+     */
+    PedidosController.prototype.getPedidos = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedidosService, responseGetPedidos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedidosService = new pedidos_services_1.default();
+                        return [4 /*yield*/, pedidosService.getPedidos(res)];
+                    case 1:
+                        responseGetPedidos = _a.sent();
+                        // Devuelve la respuesta de devolucion de pedidos
+                        return [2 /*return*/, responseGetPedidos];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
      * @date 18/09/2021
      * @description Crea el pedido del usuario y registra un movimiento en la colección de historial de usuarios
      * @param req

@@ -15,6 +15,8 @@ var pedidosController = new pedidos_controller_1.default();
 // Inicializa el middleware de autenticacion del Token
 var token = new token_1.default();
 // Rutas secundarias
+// Devolver pedidos
+pedidosRouter.get('/', token.validateToken, pedidosController.getPedidos);
 // Crear pedido
 pedidosRouter.post('/crear-pedido', token.validateToken, pedidosController.crearPedido);
 exports.default = pedidosRouter;

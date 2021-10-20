@@ -12,6 +12,8 @@ const pedidosController = new PedidosController();
 const token = new Token();
 
 // Rutas secundarias
+// Devolver pedidos
+pedidosRouter.get('/', token.validateToken, pedidosController.getPedidos);
 // Crear pedido
 pedidosRouter.post('/crear-pedido', token.validateToken, pedidosController.crearPedido);
 

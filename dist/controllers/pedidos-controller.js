@@ -91,6 +91,30 @@ var PedidosController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @author Mario Tavarez
+     * @date 23/10/2021
+     * @description Devuelve el estatus del pedido mediante el id
+     * @param req
+     * @param res
+     * @returns
+     */
+    PedidosController.prototype.getEstatusPedidoById = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedidosService, responseGetEstatusById;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedidosService = new pedidos_services_1.default();
+                        return [4 /*yield*/, pedidosService.getEstatusPedidoById(req, res)];
+                    case 1:
+                        responseGetEstatusById = _a.sent();
+                        // Devuelve la respuesta del estatus del pedido mediante el id
+                        return [2 /*return*/, responseGetEstatusById];
+                }
+            });
+        });
+    };
     return PedidosController;
 }());
 exports.default = PedidosController;

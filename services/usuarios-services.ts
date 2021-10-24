@@ -178,30 +178,45 @@ export default class UsuariosService {
         const logger: Logger = logServer.getLogConfigMVP();
         // Obtiene el id usuario
         const { idUsuario } = req.params;
+        // Obtiene los datos del usuario
+        const usuario = await this.getDatosUsuarioById(idUsuario, logger);
+        // Valida que no sea nulo la devolucion de los datos del usuario
+        if (usuario !== null) {
+            res.status(200).send({ status: 'OK', datosRegistro: usuario });
+        } else {
+            res.status(404).send({ status: 'NOK', message: `No se encontraron los datos de este usuario` });
+        }
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date Devuelve los datos del usuario por id
+     * @date 23/10/2021
+     * @param idUsuario 
+     * @param logger 
+     * @returns 
+     */
+    public async getDatosUsuarioById(idUsuario: string, logger: Logger) {
         // Inicializa el objeto de BD de MongoDB
         const connection = new Connection();
         // Espera a que conecte la BD
         await connection.connectToDB();
         // Database
         const database = connection.client.db(DATABASE.dbName);
+        // Inicializa los datos del usuario
+        let usuario: Collection<RegistroDatosInicialesModel> | any = null;
         // Collecion
         const quotesCollection = database.collection(COLLECTIONS.informacionUsuarios);
         try {
             // Registra los datos iniciales del usuario
-            const datosRegistro: Collection<RegistroDatosInicialesModel> | any = await quotesCollection.findOne({ idUsuario: idUsuario });
-            // Valida si devuelve los datos del usuario
-            if (datosRegistro) {
-                res.status(200).send({ status: 'OK', datosRegistro: datosRegistro });
-            } else {
-                res.status(404).send({ status: 'NOK', message: `No se encontraron los datos de registro del usuario, asegurese de registrarlos` });
-            }
-
+            usuario = await quotesCollection.findOne({ idUsuario: idUsuario });
         } catch (error) {
-            logger.error(`DEVOLVER DATOS REGISTRO USUARIO: No fue posible devolver los datos de registro del usuario ${idUsuario} debido a un error inesperado: ${error}`);
-            res.status(500).send({ status: 'NOK', message: 'No fue posible devolver los datos de registro del usuario debido a un error inesperado' });
+            logger.error(`GET DATOS USUARIO BY ID: No fue posible devolver los datos del usuario ${idUsuario} debido a un error inesperado: ${error}`);
         } finally {
             connection.client.close();
         }
+
+        return usuario;
     }
     /**
      * @author Mario Tavarez

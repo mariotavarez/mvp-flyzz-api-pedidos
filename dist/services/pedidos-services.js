@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var mongodb_1 = require("mongodb");
 // Enviroment
 var enviroment_1 = require("./../global/enviroment");
 // Connection Database
@@ -47,6 +48,10 @@ var connection_1 = __importDefault(require("../classes/connection"));
 var enviroment_2 = require("../global/enviroment");
 // Log Server
 var logServer_1 = __importDefault(require("../classes/logServer"));
+// Services
+var usuarios_services_1 = __importDefault(require("./usuarios-services"));
+// Constants
+var constants_1 = require("./../global/constants");
 var PedidosService = /** @class */ (function () {
     function PedidosService() {
     }
@@ -78,7 +83,7 @@ var PedidosService = /** @class */ (function () {
                     case 3:
                         pedidos = _a.sent();
                         // Valida si devuelve pedidos
-                        if (pedidos) {
+                        if (pedidos.length > 0) {
                             res.status(200).send({ status: 'OK', pedidos: pedidos });
                         }
                         else {
@@ -107,13 +112,27 @@ var PedidosService = /** @class */ (function () {
     */
     PedidosService.prototype.crearPedido = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, crearPedido, connection, database, quotesCollection, idPedido, movimientoHistorialRegistered, error_2;
+            var logServer, logger, pedido, crearPedido, connection, database, quotesCollection, usuariosService, usuarioRegistrado, idPedido, movimientoHistorialRegistered, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         logServer = new logServer_1.default();
                         logger = logServer.getLogConfigMVP();
-                        crearPedido = req.body;
+                        pedido = req.body;
+                        crearPedido = {
+                            idUsuario: pedido.idUsuario,
+                            productos: pedido.productos,
+                            total: pedido.total,
+                            direccion: pedido.direccion,
+                            noExt: pedido.noExt,
+                            noInt: pedido.noInt,
+                            latitud: pedido.latitud,
+                            longitud: pedido.longitud,
+                            estatus: constants_1.ESTATUS_PEDIDO.enProceso,
+                            idDrone: null,
+                            fechaCreacion: new Date(),
+                            fechaModificacion: new Date()
+                        };
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
                         return [4 /*yield*/, connection.connectToDB()];
@@ -124,29 +143,98 @@ var PedidosService = /** @class */ (function () {
                         quotesCollection = database.collection(enviroment_1.COLLECTIONS.pedidos);
                         _a.label = 2;
                     case 2:
-                        _a.trys.push([2, 6, , 7]);
+                        _a.trys.push([2, 9, 10, 11]);
+                        usuariosService = new usuarios_services_1.default();
+                        return [4 /*yield*/, usuariosService.getCorreoUsuarioById(pedido.idUsuario, database, logger)];
+                    case 3:
+                        usuarioRegistrado = _a.sent();
+                        if (!(usuarioRegistrado !== null)) return [3 /*break*/, 7];
                         return [4 /*yield*/, quotesCollection.insertOne(crearPedido)];
-                    case 3: return [4 /*yield*/, (_a.sent()).insertedId];
-                    case 4:
+                    case 4: return [4 /*yield*/, (_a.sent()).insertedId];
+                    case 5:
                         idPedido = _a.sent();
                         return [4 /*yield*/, this.crearMovimientoHistorial(crearPedido, idPedido.toString(), database)];
-                    case 5:
+                    case 6:
                         movimientoHistorialRegistered = _a.sent();
                         // Si se creó el pedido y el movimiento en el historial del usuario entonces todo se registró correctamente
                         if (idPedido && movimientoHistorialRegistered) {
-                            res.status(200).send({ status: 'OK', message: "Su pedido ha sido recibido, en breve usted disfrutar\u00E1 de la mejor experiencia de delivery cortes\u00EDa de FLYZZ" });
+                            res.status(200).send({ status: 'OK', message: "Su pedido ha sido recibido, en breve usted disfrutar\u00E1 de la mejor experiencia de delivery cortes\u00EDa de FLYZZ", idPedido: idPedido });
                         }
                         if (idPedido && !movimientoHistorialRegistered) {
-                            res.status(200).send({ status: 'OK', message: "Su pedido ha sido recibido, en breve usted disfrutar\u00E1 de la mejor experiencia de delivery cortes\u00EDa de FLYZZ" });
+                            res.status(200).send({ status: 'OK', message: "Su pedido ha sido recibido, en breve usted disfrutar\u00E1 de la mejor experiencia de delivery cortes\u00EDa de FLYZZ", idPedido: idPedido });
                             logger.error("CREAR PEDIDO: Pedido creado correctamente para el usuario " + crearPedido.idUsuario + ", sin embargo, no fue posible registrar el movimiento en la colecci\u00F3n de historial de usuarios");
                         }
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 8];
+                    case 7:
+                        logger.info("CREAR PEDIDO: El usuario " + pedido.idUsuario + " no se encuentra registrado");
+                        res.status(404).send({ status: 'NOK', message: "Este usuario no se encuentra registrado" });
+                        _a.label = 8;
+                    case 8: return [3 /*break*/, 11];
+                    case 9:
                         error_2 = _a.sent();
                         logger.error("CREAR PEDIDO: No fue posible crear el pedido del usuario " + crearPedido.idUsuario + " debido a: " + error_2);
                         res.status(500).send({ status: 'NOK', message: "No fue posible crear su pedido, por favor vuelva a intentarlo en unos minutos" });
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 11];
+                    case 10:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 11: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @date 23/10/2021
+     * @descripton Devuelve el estatus del pedido
+     * @param req
+     * @param res
+     */
+    PedidosService.prototype.getEstatusPedidoById = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, idPedido, connection, database, quotesCollection, pedido, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        idPedido = req.params.idPedido;
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.pedidos);
+                        if (!(idPedido.length <= 24)) return [3 /*break*/, 7];
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, 5, 6]);
+                        return [4 /*yield*/, quotesCollection.findOne({ _id: new mongodb_1.ObjectID(idPedido) })];
+                    case 3:
+                        pedido = _a.sent();
+                        // Valida si devuelve pedidos
+                        if (pedido) {
+                            res.status(200).send({ status: 'OK', estatusPedido: pedido.estatus });
+                        }
+                        else {
+                            res.status(404).send({ status: 'NOK', message: "Este pedido no ha sido registrado" });
+                        }
+                        return [3 /*break*/, 6];
+                    case 4:
+                        error_3 = _a.sent();
+                        logger.error("GET ESTATUS PEDIDO BY ID: Occurr\u00F3 un error al devolver el estatus del pedido " + idPedido + " debido a: " + error_3);
+                        res.status(500).send({ status: 'NOK', message: "No fue posible devolver el estatus del pedido debido a un error inesperado" });
+                        return [3 /*break*/, 6];
+                    case 5:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 6: return [3 /*break*/, 8];
+                    case 7:
+                        res.status(300).send({ status: 'NOK', message: "El n\u00FAmero de pedido no es v\u00E0lido" });
+                        _a.label = 8;
+                    case 8: return [2 /*return*/];
                 }
             });
         });
@@ -171,6 +259,11 @@ var PedidosService = /** @class */ (function () {
                         historialUsuario = {
                             idUsuario: pedido.idUsuario,
                             idPedido: idPedido,
+                            direccion: pedido.direccion,
+                            noExt: pedido.noExt,
+                            noInt: pedido.noInt,
+                            latitud: pedido.latitud,
+                            longitud: pedido.longitud,
                             fechaCreacion: new Date(),
                             fechaModificacion: new Date()
                         };

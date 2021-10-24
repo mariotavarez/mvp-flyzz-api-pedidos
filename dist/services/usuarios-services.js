@@ -243,13 +243,42 @@ var UsuariosService = /** @class */ (function () {
      */
     UsuariosService.prototype.devolverDatosRegistro = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, idUsuario, connection, database, quotesCollection, datosRegistro, error_2;
+            var logServer, logger, idUsuario, usuario;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         logServer = new logServer_1.default();
                         logger = logServer.getLogConfigMVP();
                         idUsuario = req.params.idUsuario;
+                        return [4 /*yield*/, this.getDatosUsuarioById(idUsuario, logger)];
+                    case 1:
+                        usuario = _a.sent();
+                        // Valida que no sea nulo la devolucion de los datos del usuario
+                        if (usuario !== null) {
+                            res.status(200).send({ status: 'OK', datosRegistro: usuario });
+                        }
+                        else {
+                            res.status(404).send({ status: 'NOK', message: "No se encontraron los datos de este usuario" });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @date Devuelve los datos del usuario por id
+     * @date 23/10/2021
+     * @param idUsuario
+     * @param logger
+     * @returns
+     */
+    UsuariosService.prototype.getDatosUsuarioById = function (idUsuario, logger) {
+        return __awaiter(this, void 0, void 0, function () {
+            var connection, database, usuario, quotesCollection, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
                         connection = new connection_1.default();
                         // Espera a que conecte la BD
                         return [4 /*yield*/, connection.connectToDB()];
@@ -257,30 +286,24 @@ var UsuariosService = /** @class */ (function () {
                         // Espera a que conecte la BD
                         _a.sent();
                         database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        usuario = null;
                         quotesCollection = database.collection(enviroment_1.COLLECTIONS.informacionUsuarios);
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 4, 5, 6]);
                         return [4 /*yield*/, quotesCollection.findOne({ idUsuario: idUsuario })];
                     case 3:
-                        datosRegistro = _a.sent();
-                        // Valida si devuelve los datos del usuario
-                        if (datosRegistro) {
-                            res.status(200).send({ status: 'OK', datosRegistro: datosRegistro });
-                        }
-                        else {
-                            res.status(404).send({ status: 'NOK', message: "No se encontraron los datos de registro del usuario, asegurese de registrarlos" });
-                        }
+                        // Registra los datos iniciales del usuario
+                        usuario = _a.sent();
                         return [3 /*break*/, 6];
                     case 4:
                         error_2 = _a.sent();
-                        logger.error("DEVOLVER DATOS REGISTRO USUARIO: No fue posible devolver los datos de registro del usuario " + idUsuario + " debido a un error inesperado: " + error_2);
-                        res.status(500).send({ status: 'NOK', message: 'No fue posible devolver los datos de registro del usuario debido a un error inesperado' });
+                        logger.error("GET DATOS USUARIO BY ID: No fue posible devolver los datos del usuario " + idUsuario + " debido a un error inesperado: " + error_2);
                         return [3 /*break*/, 6];
                     case 5:
                         connection.client.close();
                         return [7 /*endfinally*/];
-                    case 6: return [2 /*return*/];
+                    case 6: return [2 /*return*/, usuario];
                 }
             });
         });

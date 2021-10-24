@@ -19,4 +19,6 @@ var token = new token_1.default();
 pedidosRouter.get('/', token.validateToken, pedidosController.getPedidos);
 // Crear pedido
 pedidosRouter.post('/crear-pedido', token.validateToken, pedidosController.crearPedido);
+// Estatus de pedido por id
+pedidosRouter.get('/estatus-pedido/:idPedido', token.validateToken, pedidosController.getEstatusPedidoById);
 exports.default = pedidosRouter;

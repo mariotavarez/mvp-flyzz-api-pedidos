@@ -115,6 +115,29 @@ var PedidosController = /** @class */ (function () {
             });
         });
     };
+    /**
+    * @author Mario Tavarez
+    * @date 23/10/2021
+    * @description Devuelve el historial de movimientos del usuario mediante el id usuario
+    * @param req
+    * @param res
+    */
+    PedidosController.prototype.getHistorialMovimientosByUsuario = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedidosService, responseHistorialMovimientosByUsuario;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedidosService = new pedidos_services_1.default();
+                        return [4 /*yield*/, pedidosService.getHistorialMovimientosByUsuario(req, res)];
+                    case 1:
+                        responseHistorialMovimientosByUsuario = _a.sent();
+                        // Devuelve la respuesta del historial de movimientos por usuario
+                        return [2 /*return*/, responseHistorialMovimientosByUsuario];
+                }
+            });
+        });
+    };
     return PedidosController;
 }());
 exports.default = PedidosController;

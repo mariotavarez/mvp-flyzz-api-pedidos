@@ -259,6 +259,7 @@ var PedidosService = /** @class */ (function () {
                         historialUsuario = {
                             idUsuario: pedido.idUsuario,
                             idPedido: idPedido,
+                            productos: pedido.productos,
                             direccion: pedido.direccion,
                             noExt: pedido.noExt,
                             noInt: pedido.noInt,
@@ -275,6 +276,66 @@ var PedidosService = /** @class */ (function () {
                             isCreated = true;
                         }
                         return [2 /*return*/, isCreated];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @date 23/10/2021
+     * @description Devuelve el historial de movimientos del usuario mediante el id usuario
+     * @param req
+     * @param res
+     */
+    PedidosService.prototype.getHistorialMovimientosByUsuario = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, idUsuario, connection, database, quotesCollection, usuariosService, usuario, historialMovimientos, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        idUsuario = req.params.idUsuario;
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.historialUsuarios);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 7, 8, 9]);
+                        usuariosService = new usuarios_services_1.default();
+                        return [4 /*yield*/, usuariosService.getCorreoUsuarioById(idUsuario, database, logger)];
+                    case 3:
+                        usuario = _a.sent();
+                        if (!(usuario !== null)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, quotesCollection.find({ idUsuario: idUsuario }).toArray()];
+                    case 4:
+                        historialMovimientos = _a.sent();
+                        // Valida si encuentra historial de movimientos del usuario
+                        if (historialMovimientos) {
+                            res.status(200).send({ status: 'OK', historialMovimientos: historialMovimientos });
+                        }
+                        else {
+                            res.status(200).send({ status: 'OK', historialMovimientos: [] });
+                        }
+                        return [3 /*break*/, 6];
+                    case 5:
+                        res.status(404).send({ status: 'NOK', message: 'Este usuario no se encuentra registrado' });
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 9];
+                    case 7:
+                        error_4 = _a.sent();
+                        res.status(500).send({ status: 'NOK', message: "No fue posible devolver el historial de movimientos del usuario debido a un error desconocido" });
+                        logger.error("GET HISTORIAL MOVIMIENTOS BY USUARIO: No fue posible devolver el historial de movimientos del usuario " + idUsuario + " debido a: " + error_4);
+                        return [3 /*break*/, 9];
+                    case 8:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 9: return [2 /*return*/];
                 }
             });
         });

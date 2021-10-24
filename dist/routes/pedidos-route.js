@@ -21,4 +21,6 @@ pedidosRouter.get('/', token.validateToken, pedidosController.getPedidos);
 pedidosRouter.post('/crear-pedido', token.validateToken, pedidosController.crearPedido);
 // Estatus de pedido por id
 pedidosRouter.get('/estatus-pedido/:idPedido', token.validateToken, pedidosController.getEstatusPedidoById);
+// Historial de movimientos por id usuario
+pedidosRouter.get('/historial-movimientos/:idUsuario', token.validateToken, pedidosController.getHistorialMovimientosByUsuario);
 exports.default = pedidosRouter;

@@ -1,31 +1,11 @@
-[2021-10-23T22:23:37.545] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:24:53.647] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:26:09.708] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:27:01.835] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:27:33.056] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:27:48.604] [INFO] mvp - POST /pedidos/crear-pedido
-[2021-10-23T22:28:45.754] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
-[2021-10-23T22:29:49.641] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:29:54.773] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
-[2021-10-23T22:30:01.767] [ERROR] mvp - GET ESTATUS PEDIDO BY ID: Occurró un error al devolver el estatus del pedido 6174d2b45b98ccc47cf8f6fe3 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-23T22:30:01.769] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe3
-[2021-10-23T22:30:22.113] [ERROR] mvp - GET ESTATUS PEDIDO BY ID: Occurró un error al devolver el estatus del pedido 6174d2b45b98ccc47cf8f6fe3ffrfr debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-23T22:30:22.117] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe3ffrfr
-[2021-10-23T22:30:48.832] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:30:50.563] [ERROR] mvp - GET ESTATUS PEDIDO BY ID: Occurró un error al devolver el estatus del pedido 6174d2b45b98ccc47cf8f6fe3ffrfr debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-23T22:30:50.585] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe3ffrfr
-[2021-10-23T22:33:23.592] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:33:29.836] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:33:32.960] [ERROR] mvp - GET ESTATUS PEDIDO BY ID: Occurró un error al devolver el estatus del pedido 6174d2b45b98ccc47cf8f6fe3 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-23T22:33:32.974] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe3
-[2021-10-23T22:33:39.204] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
-[2021-10-23T22:33:44.994] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-23T22:33:48.593] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
-[2021-10-23T22:33:51.960] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe2
-[2021-10-23T22:34:02.251] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe3
-[2021-10-23T22:34:08.132] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f644
-[2021-10-23T22:34:14.147] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
-[2021-10-23T22:34:19.688] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6f2
-[2021-10-23T22:34:25.422] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
-[2021-10-23T22:34:28.455] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe2
-[2021-10-23T22:34:35.755] [INFO] mvp - GET /pedidos/estatus-pedido/6174d2b45b98ccc47cf8f6fe
+[2021-10-23T23:03:32.326] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-23T23:04:07.044] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-23T23:05:24.442] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-23T23:06:04.250] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-23T23:07:10.103] [INFO] mvp - GET /pedidos/historial-movimientos/61749d41f9ea3da6d4c1f9ec
+[2021-10-23T23:08:57.966] [INFO] mvp - POST /pedidos/crear-pedido
+[2021-10-23T23:09:03.471] [INFO] mvp - GET /pedidos/historial-movimientos/61749d41f9ea3da6d4c1f9ec
+[2021-10-23T23:11:26.287] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-23T23:11:32.007] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-23T23:11:56.599] [INFO] mvp - POST /pedidos/crear-pedido
+[2021-10-23T23:12:00.790] [INFO] mvp - GET /pedidos/historial-movimientos/61749d41f9ea3da6d4c1f9ec

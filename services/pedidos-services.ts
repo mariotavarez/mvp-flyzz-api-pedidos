@@ -139,9 +139,9 @@ export default class PedidosService {
         const logServer = new LogServer();
         // Obtiene la configuracion del log MVP
         const logger: Logger = logServer.getLogConfigMVP();
-
+        // Obtiene el id pedido mediante parametro
         const { idPedido } = req.params;
-
+        // Crea la conection con BD
         const connection = new Connection();
         // Espera a que conecte la BD
         await connection.connectToDB();
@@ -190,6 +190,7 @@ export default class PedidosService {
         const historialUsuario: HistorialUsuarioModel = {
             idUsuario: pedido.idUsuario,
             idPedido: idPedido,
+            productos: pedido.productos,
             direccion: pedido.direccion,
             noExt: pedido.noExt,
             noInt: pedido.noInt,
@@ -207,6 +208,55 @@ export default class PedidosService {
         }
 
         return isCreated;
+
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 23/10/2021
+     * @description Devuelve el historial de movimientos del usuario mediante el id usuario
+     * @param req 
+     * @param res 
+     */
+    public async getHistorialMovimientosByUsuario(req: Request, res: Response) {
+
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Obtiene el id usuario mediante parametro
+        const { idUsuario } = req.params;
+        // Crea la conection con BD
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion Pedidos
+        const quotesCollection = database.collection(COLLECTIONS.historialUsuarios);
+        try {
+            // Inicializa la clase de usuarios
+            const usuariosService = new UsuariosService();
+            // Valida si el usuario se encuentra registrado
+            const usuario = await usuariosService.getCorreoUsuarioById(idUsuario, database, logger);
+            // Valida si devuelve datos del usuario
+            if (usuario !== null) {
+                const historialMovimientos: Collection<any> | any = await quotesCollection.find({ idUsuario: idUsuario }).toArray();
+                // Valida si encuentra historial de movimientos del usuario
+                if (historialMovimientos) {
+                    res.status(200).send({ status: 'OK', historialMovimientos: historialMovimientos });
+                } else {
+                    res.status(200).send({ status: 'OK', historialMovimientos: [] })
+                }
+            } else {
+                res.status(404).send({ status: 'NOK', message: 'Este usuario no se encuentra registrado' });
+            }
+        } catch (error) {
+            res.status(500).send({ status: 'NOK', message: `No fue posible devolver el historial de movimientos del usuario debido a un error desconocido` });
+            logger.error(`GET HISTORIAL MOVIMIENTOS BY USUARIO: No fue posible devolver el historial de movimientos del usuario ${idUsuario} debido a: ${error}`);
+        } finally {
+            connection.client.close();
+        }
 
     }
 }

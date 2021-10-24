@@ -61,4 +61,21 @@ export default class PedidosController {
 
     }
 
+    /**
+    * @author Mario Tavarez
+    * @date 23/10/2021
+    * @description Devuelve el historial de movimientos del usuario mediante el id usuario
+    * @param req 
+    * @param res 
+    */
+    public async getHistorialMovimientosByUsuario(req: Request, res: Response) {
+        // Inicializa el servicio de pedidos
+        const pedidosService = new PedidosService();
+        // Obtiene la respuesta del historial de movimientos por usuario
+        const responseHistorialMovimientosByUsuario = await pedidosService.getHistorialMovimientosByUsuario(req, res);
+        // Devuelve la respuesta del historial de movimientos por usuario
+        return responseHistorialMovimientosByUsuario;
+
+    }
+
 }

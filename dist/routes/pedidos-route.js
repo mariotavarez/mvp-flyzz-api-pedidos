@@ -19,6 +19,8 @@ var token = new token_1.default();
 pedidosRouter.get('/', token.validateToken, pedidosController.getPedidos);
 // Crear pedido
 pedidosRouter.post('/crear-pedido', token.validateToken, pedidosController.crearPedido);
+// Actualiza pedido mediante el id y se agrega el estatus del pedido
+pedidosRouter.put('/actualizar-pedido', token.validateToken, pedidosController.actualizarPedido);
 // Estatus de pedido por id
 pedidosRouter.get('/estatus-pedido/:idPedido', token.validateToken, pedidosController.getEstatusPedidoById);
 // Historial de movimientos por id usuario

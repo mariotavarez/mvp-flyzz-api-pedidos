@@ -93,6 +93,30 @@ var PedidosController = /** @class */ (function () {
     };
     /**
      * @author Mario Tavarez
+     * @date 24/09/2021
+     * @description Actualiza el estatus del pedido mediante el id pedido y el estatus que se actualiza
+     * @param req
+     * @param res
+     * @returns
+     */
+    PedidosController.prototype.actualizarPedido = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedidosService, responseActualizarPedido;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedidosService = new pedidos_services_1.default();
+                        return [4 /*yield*/, pedidosService.actualizarEstatusPedidoById(req, res)];
+                    case 1:
+                        responseActualizarPedido = _a.sent();
+                        // Devuelve la respuesta de crear pedido
+                        return [2 /*return*/, responseActualizarPedido];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
      * @date 23/10/2021
      * @description Devuelve el estatus del pedido mediante el id
      * @param req

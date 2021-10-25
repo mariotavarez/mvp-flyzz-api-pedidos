@@ -282,6 +282,78 @@ var PedidosService = /** @class */ (function () {
     };
     /**
      * @author Mario Tavarez
+     * @date 24/10/2021
+     * @description Actualiza los datos del pedido mediante el id, el estatus proviene de la peticion. Adicionalmente valida que
+     *              el estatus no se encuentre como ENTREGADO para no modificar la ultima fecha de modificacion
+     * @param req
+     * @param res
+     */
+    PedidosService.prototype.actualizarEstatusPedidoById = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, pedido, connection, database, quotesCollection, datosPedido, estatus, actualizarPedido, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        pedido = req.body;
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.pedidos);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 9, 10, 11]);
+                        // Valida que el estatus entrante sea EN CAMINO o ENTREGADO
+                        if (pedido.estatus !== constants_1.ESTATUS_PEDIDO.enCamino && pedido.estatus !== constants_1.ESTATUS_PEDIDO.entregado) {
+                            // Cierra la conexion de BD
+                            connection.client.close();
+                            // No procede el estatus si no se encuentra dentro de los permitidos
+                            res.status(300).send({ status: 'NOK', message: "El estatus " + pedido.estatus + " no es v\u00E1lido" });
+                        }
+                        return [4 /*yield*/, quotesCollection.findOne({ '_id': new mongodb_1.ObjectID(pedido.idPedido) })];
+                    case 3:
+                        datosPedido = _a.sent();
+                        if (!datosPedido) return [3 /*break*/, 7];
+                        estatus = datosPedido.estatus;
+                        if (!(estatus === 'ENTREGADO')) return [3 /*break*/, 4];
+                        res.status(300).send({ status: 'NOK', message: "Este n\u00FAmero de pedido no se puede actualizar ya que se encuentra actualmente como ENTREGADO" });
+                        return [3 /*break*/, 6];
+                    case 4: return [4 /*yield*/, quotesCollection.findOneAndUpdate({ '_id': new mongodb_1.ObjectID(pedido.idPedido) }, { $set: { estatus: pedido.estatus, idDrone: '38484TTJ39393932D8', fechaModificacion: new Date() } })];
+                    case 5:
+                        actualizarPedido = _a.sent();
+                        // Valida que se haya actualizado el pedido
+                        if (actualizarPedido) {
+                            res.status(200).send({ status: 'OK', message: "El estatus del pedido se ha actualizado a " + pedido.estatus + " correctamente" });
+                        }
+                        else {
+                            res.status(300).send({ status: 'NOK', message: "No fue posible actualizar el estatus del pedido debido" });
+                        }
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 8];
+                    case 7:
+                        res.status(404).send({ status: 'NOK', message: "Este n\u00FAmero de pedido no se encuentra registrado" });
+                        _a.label = 8;
+                    case 8: return [3 /*break*/, 11];
+                    case 9:
+                        error_4 = _a.sent();
+                        res.status(500).send({ status: 'NOK', message: "No fue posible actualizar el estatus debido a un error inesperado" });
+                        logger.error("ACTUALIZAR PEDIDO: No fue posible actualizar el pedido " + pedido.idPedido + " a estatus " + pedido.estatus + " debido a: " + error_4);
+                        return [3 /*break*/, 11];
+                    case 10:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 11: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
      * @date 23/10/2021
      * @description Devuelve el historial de movimientos del usuario mediante el id usuario
      * @param req
@@ -289,7 +361,7 @@ var PedidosService = /** @class */ (function () {
      */
     PedidosService.prototype.getHistorialMovimientosByUsuario = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, idUsuario, connection, database, quotesCollection, usuariosService, usuario, historialMovimientos, error_4;
+            var logServer, logger, idUsuario, connection, database, quotesCollection, usuariosService, usuario, historialMovimientos, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -328,9 +400,9 @@ var PedidosService = /** @class */ (function () {
                         _a.label = 6;
                     case 6: return [3 /*break*/, 9];
                     case 7:
-                        error_4 = _a.sent();
+                        error_5 = _a.sent();
                         res.status(500).send({ status: 'NOK', message: "No fue posible devolver el historial de movimientos del usuario debido a un error desconocido" });
-                        logger.error("GET HISTORIAL MOVIMIENTOS BY USUARIO: No fue posible devolver el historial de movimientos del usuario " + idUsuario + " debido a: " + error_4);
+                        logger.error("GET HISTORIAL MOVIMIENTOS BY USUARIO: No fue posible devolver el historial de movimientos del usuario " + idUsuario + " debido a: " + error_5);
                         return [3 /*break*/, 9];
                     case 8:
                         connection.client.close();

@@ -45,6 +45,24 @@ export default class PedidosController {
 
     /**
      * @author Mario Tavarez
+     * @date 24/09/2021
+     * @description Actualiza el estatus del pedido mediante el id pedido y el estatus que se actualiza
+     * @param req 
+     * @param res 
+     * @returns 
+     */
+    public async actualizarPedido(req: Request, res: Response) {
+        // Inicializa el servicio de pedidos
+        const pedidosService = new PedidosService();
+        // Obtiene la respuesta de crear pedido
+        const responseActualizarPedido = await pedidosService.actualizarEstatusPedidoById(req, res);
+        // Devuelve la respuesta de crear pedido
+        return responseActualizarPedido;
+
+    }
+
+    /**
+     * @author Mario Tavarez
      * @date 23/10/2021
      * @description Devuelve el estatus del pedido mediante el id
      * @param req 

@@ -20,6 +20,7 @@ import { Logger } from 'log4js';
 import UsuariosService from './usuarios-services';
 // Constants
 import { ESTATUS_PEDIDO } from './../global/constants';
+import { ActualizarPedidoModel } from '../models/pedidos/actualizarPedido-model';
 
 export default class PedidosService {
 
@@ -208,7 +209,66 @@ export default class PedidosService {
         }
 
         return isCreated;
+    }
 
+    /**
+     * @author Mario Tavarez
+     * @date 24/10/2021
+     * @description Actualiza los datos del pedido mediante el id, el estatus proviene de la peticion. Adicionalmente valida que
+     *              el estatus no se encuentre como ENTREGADO para no modificar la ultima fecha de modificacion
+     * @param req 
+     * @param res 
+     */
+    public async actualizarEstatusPedidoById(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Obtiene los datos para actualizar el pedido del usuario
+        const pedido: ActualizarPedidoModel = req.body;
+        // Crea la conection con BD
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion Pedidos
+        const quotesCollection = database.collection(COLLECTIONS.pedidos);
+        try {
+            // Valida que el estatus entrante sea EN CAMINO o ENTREGADO
+            if (pedido.estatus !== ESTATUS_PEDIDO.enCamino && pedido.estatus !== ESTATUS_PEDIDO.entregado) {
+                // Cierra la conexion de BD
+                connection.client.close();
+                // No procede el estatus si no se encuentra dentro de los permitidos
+                res.status(300).send({ status: 'NOK', message: `El estatus ${pedido.estatus} no es válido` });
+            }
+            // Valida si el pedido se encuentra registrado anteriormente
+            const datosPedido: Collection<any> | any = await quotesCollection.findOne({ '_id': new ObjectID(pedido.idPedido) });
+            // Si existe el pedido entonces procede a validar que no se encuentre entregado
+            if (datosPedido) {
+                const { estatus } = datosPedido;
+                // Valida que el estatus no se encuentre entregado para no actualizar datos y afectar la ultima fecha de modificacion
+                if (estatus === 'ENTREGADO') {
+                    res.status(300).send({ status: 'NOK', message: `Este número de pedido no se puede actualizar ya que se encuentra actualmente como ENTREGADO` });
+                } else {
+                    // Se procede a actualizar los datos del pedido
+                    const actualizarPedido: Collection<any> | any = await quotesCollection.findOneAndUpdate({ '_id': new ObjectID(pedido.idPedido) }, { $set: { estatus: pedido.estatus, idDrone: '38484TTJ39393932D8', fechaModificacion: new Date() } });
+                    // Valida que se haya actualizado el pedido
+                    if (actualizarPedido) {
+                        res.status(200).send({ status: 'OK', message: `El estatus del pedido se ha actualizado a ${pedido.estatus} correctamente` });
+                    } else {
+                        res.status(300).send({ status: 'NOK', message: `No fue posible actualizar el estatus del pedido debido` });
+                    }
+                }
+            } else {
+                res.status(404).send({ status: 'NOK', message: `Este número de pedido no se encuentra registrado` });
+            }
+        } catch (error) {
+            res.status(500).send({ status: 'NOK', message: `No fue posible actualizar el estatus debido a un error inesperado` });
+            logger.error(`ACTUALIZAR PEDIDO: No fue posible actualizar el pedido ${pedido.idPedido} a estatus ${pedido.estatus} debido a: ${error}`);
+        } finally {
+            connection.client.close();
+        }
     }
 
     /**

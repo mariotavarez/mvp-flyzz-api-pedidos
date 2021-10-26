@@ -32,7 +32,8 @@ exports.COLLECTIONS = {
     informacionUsuarios: 'informacion-usuarios',
     pedidos: 'pedidos',
     historialUsuarios: 'historial-usuarios',
-    banners: 'banners'
+    banners: 'banners',
+    comentariosPedidos: 'comentarios-pedidos'
 };
 // COLLECTIONS CONTROL
 exports.COLLECTIONS_CONTROL = {

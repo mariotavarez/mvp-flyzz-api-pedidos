@@ -39,13 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongodb_1 = require("mongodb");
 // Enviroment
 var enviroment_1 = require("./../global/enviroment");
 // Connection Database
 var connection_1 = __importDefault(require("../classes/connection"));
 // Database
 var enviroment_2 = require("../global/enviroment");
+var mongodb_1 = require("mongodb");
 // Log Server
 var logServer_1 = __importDefault(require("../classes/logServer"));
 // Services
@@ -283,6 +283,40 @@ var PedidosService = /** @class */ (function () {
     /**
      * @author Mario Tavarez
      * @date 24/10/2021
+     * @description Valida si existe el pedido en base a un id pedido
+     * @param idPedido
+     * @param logger
+     * @param database
+     * @returns
+     */
+    PedidosService.prototype.validarExistenciaPedido = function (idPedido, logger, database) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedido, quotesCollection, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedido = null;
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.pedidos);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, quotesCollection.findOne({ '_id': new mongodb_1.ObjectID(idPedido) })];
+                    case 2:
+                        // Valida si el pedido se encuentra registrado anteriormente
+                        pedido = _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_4 = _a.sent();
+                        logger.error("EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido " + idPedido + " debido a: " + error_4);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/, pedido];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @date 24/10/2021
      * @description Actualiza los datos del pedido mediante el id, el estatus proviene de la peticion. Adicionalmente valida que
      *              el estatus no se encuentre como ENTREGADO para no modificar la ultima fecha de modificacion
      * @param req
@@ -290,7 +324,7 @@ var PedidosService = /** @class */ (function () {
      */
     PedidosService.prototype.actualizarEstatusPedidoById = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, pedido, connection, database, quotesCollection, datosPedido, estatus, actualizarPedido, error_4;
+            var logServer, logger, pedido, connection, database, quotesCollection, datosPedido, estatus, actualizarPedido, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -315,10 +349,10 @@ var PedidosService = /** @class */ (function () {
                             // No procede el estatus si no se encuentra dentro de los permitidos
                             res.status(300).send({ status: 'NOK', message: "El estatus " + pedido.estatus + " no es v\u00E1lido" });
                         }
-                        return [4 /*yield*/, quotesCollection.findOne({ '_id': new mongodb_1.ObjectID(pedido.idPedido) })];
+                        return [4 /*yield*/, this.validarExistenciaPedido(pedido.idPedido, logger, database)];
                     case 3:
                         datosPedido = _a.sent();
-                        if (!datosPedido) return [3 /*break*/, 7];
+                        if (!(datosPedido !== null)) return [3 /*break*/, 7];
                         estatus = datosPedido.estatus;
                         if (!(estatus === 'ENTREGADO')) return [3 /*break*/, 4];
                         res.status(300).send({ status: 'NOK', message: "Este n\u00FAmero de pedido no se puede actualizar ya que se encuentra actualmente como ENTREGADO" });
@@ -340,9 +374,9 @@ var PedidosService = /** @class */ (function () {
                         _a.label = 8;
                     case 8: return [3 /*break*/, 11];
                     case 9:
-                        error_4 = _a.sent();
+                        error_5 = _a.sent();
                         res.status(500).send({ status: 'NOK', message: "No fue posible actualizar el estatus debido a un error inesperado" });
-                        logger.error("ACTUALIZAR PEDIDO: No fue posible actualizar el pedido " + pedido.idPedido + " a estatus " + pedido.estatus + " debido a: " + error_4);
+                        logger.error("ACTUALIZAR PEDIDO: No fue posible actualizar el pedido " + pedido.idPedido + " a estatus " + pedido.estatus + " debido a: " + error_5);
                         return [3 /*break*/, 11];
                     case 10:
                         connection.client.close();
@@ -361,7 +395,7 @@ var PedidosService = /** @class */ (function () {
      */
     PedidosService.prototype.getHistorialMovimientosByUsuario = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, idUsuario, connection, database, quotesCollection, usuariosService, usuario, historialMovimientos, error_5;
+            var logServer, logger, idUsuario, connection, database, quotesCollection, usuariosService, usuario, historialMovimientos, error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -400,14 +434,77 @@ var PedidosService = /** @class */ (function () {
                         _a.label = 6;
                     case 6: return [3 /*break*/, 9];
                     case 7:
-                        error_5 = _a.sent();
+                        error_6 = _a.sent();
                         res.status(500).send({ status: 'NOK', message: "No fue posible devolver el historial de movimientos del usuario debido a un error desconocido" });
-                        logger.error("GET HISTORIAL MOVIMIENTOS BY USUARIO: No fue posible devolver el historial de movimientos del usuario " + idUsuario + " debido a: " + error_5);
+                        logger.error("GET HISTORIAL MOVIMIENTOS BY USUARIO: No fue posible devolver el historial de movimientos del usuario " + idUsuario + " debido a: " + error_6);
                         return [3 /*break*/, 9];
                     case 8:
                         connection.client.close();
                         return [7 /*endfinally*/];
                     case 9: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
+     * @date 24/10/2021
+     * @description Crea el comentario del usuario en base a la experiencia del pedido
+     * @param req
+     * @param res
+     */
+    PedidosService.prototype.crearComentarioPedido = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, comentariosPedido, connection, database, quotesCollection, datosPedido, usuariosService, usuario, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        comentariosPedido = req.body;
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.comentariosPedidos);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 8, 9, 10]);
+                        return [4 /*yield*/, this.validarExistenciaPedido(comentariosPedido.idPedido, logger, database)];
+                    case 3:
+                        datosPedido = _a.sent();
+                        usuariosService = new usuarios_services_1.default();
+                        return [4 /*yield*/, usuariosService.getCorreoUsuarioById(comentariosPedido.usuario.idUsuario, database, logger)];
+                    case 4:
+                        usuario = _a.sent();
+                        // Valida que el usuario exista
+                        if (usuario === null) {
+                            return [2 /*return*/, res.status(404).send({ status: 'NOK', message: "Este usuario no se encuentra registrado" })];
+                        }
+                        if (!(datosPedido !== null)) return [3 /*break*/, 6];
+                        // Registra el comentario asociado al pedido
+                        return [4 /*yield*/, quotesCollection.insertOne({ comentariosPedido: comentariosPedido })];
+                    case 5:
+                        // Registra el comentario asociado al pedido
+                        _a.sent();
+                        res.status(200).send({ status: 'OK', message: "Muchas gracias por tus comentarios, tu opini\u00F3n es muy importante para nosotros" });
+                        return [3 /*break*/, 7];
+                    case 6:
+                        res.status(404).send({ status: 'NOK', message: "Este n\u00FAmero de pedido no esta registrado" });
+                        _a.label = 7;
+                    case 7: return [3 /*break*/, 10];
+                    case 8:
+                        error_7 = _a.sent();
+                        res.status(500).send({ status: 'NOK', message: "No fue posible crear su comentario debido a que ocurri\u00F3 un error inesperado" });
+                        logger.error("CREAR COMENTARIO PEDIDO: No fue posible crear el comentario del usuario " + comentariosPedido.usuario.idUsuario + " debido a: " + error_7);
+                        return [3 /*break*/, 10];
+                    case 9:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 10: return [2 /*return*/];
                 }
             });
         });

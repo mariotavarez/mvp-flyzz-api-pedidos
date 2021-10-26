@@ -162,6 +162,29 @@ var PedidosController = /** @class */ (function () {
             });
         });
     };
+    /**
+    * @author Mario Tavarez
+    * @date 24/10/2021
+    * @description Crea el comentario del usuario en base a la experiencia del pedido
+    * @param req
+    * @param res
+    */
+    PedidosController.prototype.crearComentarioPedido = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedidosService, responseCrearComentarioPedido;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedidosService = new pedidos_services_1.default();
+                        return [4 /*yield*/, pedidosService.crearComentarioPedido(req, res)];
+                    case 1:
+                        responseCrearComentarioPedido = _a.sent();
+                        // Devuelve la respuesta de crear el comentario del pedido
+                        return [2 /*return*/, responseCrearComentarioPedido];
+                }
+            });
+        });
+    };
     return PedidosController;
 }());
 exports.default = PedidosController;

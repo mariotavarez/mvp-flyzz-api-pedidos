@@ -1,4 +1,3 @@
-import { ObjectID } from 'mongodb';
 // Enviroment
 import { COLLECTIONS } from './../global/enviroment';
 // Express
@@ -9,8 +8,10 @@ import { Collection, Db } from "mongodb";
 import Connection from "../classes/connection";
 // Database
 import { DATABASE } from "../global/enviroment";
+import { ObjectID } from 'mongodb';
 // Models
 import { CrearPedidoModel } from '../models/pedidos/crearPedido-model';
+import { ActualizarPedidoModel } from '../models/pedidos/actualizarPedido-model';
 import { HistorialUsuarioModel } from '../models/productos/historialUsuario-model';
 // Log Server
 import LogServer from '../classes/logServer';
@@ -20,7 +21,7 @@ import { Logger } from 'log4js';
 import UsuariosService from './usuarios-services';
 // Constants
 import { ESTATUS_PEDIDO } from './../global/constants';
-import { ActualizarPedidoModel } from '../models/pedidos/actualizarPedido-model';
+import { ComentariosPedidoModel } from '../models/pedidos/comentariosPedido-model';
 
 export default class PedidosService {
 
@@ -214,6 +215,32 @@ export default class PedidosService {
     /**
      * @author Mario Tavarez
      * @date 24/10/2021
+     * @description Valida si existe el pedido en base a un id pedido
+     * @param idPedido 
+     * @param logger 
+     * @param database 
+     * @returns 
+     */
+    public async validarExistenciaPedido(idPedido: string, logger: Logger, database: any) {
+
+        let pedido: Collection<any> | any = null;
+        // Database
+        // Collecion Pedidos
+        const quotesCollection = database.collection(COLLECTIONS.pedidos);
+
+        try {
+            // Valida si el pedido se encuentra registrado anteriormente
+            pedido = await quotesCollection.findOne({ '_id': new ObjectID(idPedido) });
+        } catch (error) {
+            logger.error(`EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido ${idPedido} debido a: ${error}`);
+        }
+
+        return pedido;
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 24/10/2021
      * @description Actualiza los datos del pedido mediante el id, el estatus proviene de la peticion. Adicionalmente valida que
      *              el estatus no se encuentre como ENTREGADO para no modificar la ultima fecha de modificacion
      * @param req 
@@ -243,9 +270,9 @@ export default class PedidosService {
                 res.status(300).send({ status: 'NOK', message: `El estatus ${pedido.estatus} no es válido` });
             }
             // Valida si el pedido se encuentra registrado anteriormente
-            const datosPedido: Collection<any> | any = await quotesCollection.findOne({ '_id': new ObjectID(pedido.idPedido) });
+            const datosPedido: Collection<any> | any = await this.validarExistenciaPedido(pedido.idPedido, logger, database);
             // Si existe el pedido entonces procede a validar que no se encuentre entregado
-            if (datosPedido) {
+            if (datosPedido !== null) {
                 const { estatus } = datosPedido;
                 // Valida que el estatus no se encuentre entregado para no actualizar datos y afectar la ultima fecha de modificacion
                 if (estatus === 'ENTREGADO') {
@@ -271,6 +298,7 @@ export default class PedidosService {
         }
     }
 
+
     /**
      * @author Mario Tavarez
      * @date 23/10/2021
@@ -279,7 +307,6 @@ export default class PedidosService {
      * @param res 
      */
     public async getHistorialMovimientosByUsuario(req: Request, res: Response) {
-
         // Crea la instancia de Servidor de Log
         const logServer = new LogServer();
         // Obtiene la configuracion del log MVP
@@ -318,5 +345,55 @@ export default class PedidosService {
             connection.client.close();
         }
 
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 24/10/2021
+     * @description Crea el comentario del usuario en base a la experiencia del pedido
+     * @param req 
+     * @param res 
+     */
+    public async crearComentarioPedido(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Obtiene el id usuario mediante parametro
+        const comentariosPedido: ComentariosPedidoModel = req.body;
+        // Crea la conection con BD
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion Comentarios Pedidos
+        const quotesCollection = database.collection(COLLECTIONS.comentariosPedidos);
+        try {
+            // Valida la existencia del pedido mediante el id pedido
+            const datosPedido: Collection<any> | any = await this.validarExistenciaPedido(comentariosPedido.idPedido, logger, database);
+            // valida que el usuario exista
+            const usuariosService = new UsuariosService();
+            // Obtiene los datos del usuario
+            const usuario = await usuariosService.getCorreoUsuarioById(comentariosPedido.usuario.idUsuario, database, logger);
+            // Valida que el usuario exista
+            if (usuario === null) {
+                return res.status(404).send({ status: 'NOK', message: `Este usuario no se encuentra registrado` });
+            }
+            // Valida que el pedido exista
+            if (datosPedido !== null) {
+                // Registra el comentario asociado al pedido
+                await quotesCollection.insertOne({ comentariosPedido });
+                res.status(200).send({ status: 'OK', message: `Muchas gracias por tus comentarios, tu opinión es muy importante para nosotros` });
+            } else {
+                res.status(404).send({ status: 'NOK', message: `Este número de pedido no esta registrado` });
+            }
+
+        } catch (error) {
+            res.status(500).send({ status: 'NOK', message: `No fue posible crear su comentario debido a que ocurrió un error inesperado` });
+            logger.error(`CREAR COMENTARIO PEDIDO: No fue posible crear el comentario del usuario ${comentariosPedido.usuario.idUsuario} debido a: ${error}`);
+        } finally {
+            connection.client.close();
+        }
     }
 }

@@ -96,4 +96,21 @@ export default class PedidosController {
 
     }
 
+    /**
+    * @author Mario Tavarez
+    * @date 24/10/2021
+    * @description Crea el comentario del usuario en base a la experiencia del pedido
+    * @param req 
+    * @param res 
+    */
+    public async crearComentarioPedido(req: Request, res: Response) {
+        // Inicializa el servicio de pedidos
+        const pedidosService = new PedidosService();
+        // Obtiene la respuesta de crear el comentario del pedido
+        const responseCrearComentarioPedido = await pedidosService.crearComentarioPedido(req, res);
+        // Devuelve la respuesta de crear el comentario del pedido
+        return responseCrearComentarioPedido;
+
+    }
+
 }

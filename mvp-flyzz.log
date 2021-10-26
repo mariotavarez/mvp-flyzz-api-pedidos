@@ -1,28 +1,13 @@
-[2021-10-24T22:01:49.737] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:02:48.523] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:03:11.514] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:03:25.488] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:03:37.766] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:05:13.303] [INFO] mvp - POST /pedidos/crear-pedido
-[2021-10-24T22:05:28.073] [INFO] mvp - POST /pedidos/actualizar-pedido
-[2021-10-24T22:05:38.105] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:07:05.951] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:07:12.525] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:07:41.264] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:11:28.438] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:11:39.211] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:12:51.202] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:12:58.483] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:13:11.633] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:13:20.202] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:13:26.639] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:14:20.797] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:14:31.432] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:18:49.316] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-24T22:19:26.552] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:19:38.179] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:19:48.328] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:20:13.667] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:20:24.423] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:20:32.457] [INFO] mvp - PUT /pedidos/actualizar-pedido
-[2021-10-24T22:20:35.888] [INFO] mvp - PUT /pedidos/actualizar-pedido
+[2021-10-25T21:16:43.619] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-25T21:17:50.494] [WARN] mvp - TOKEN VACÍO: Request /pedidos/crear-comentario Payload: {"usuario":{"idUsuario":"61749d41f9ea3da6d4c1f9ec","nombres":"Mario Josue","apellidoPaterno":"Tavarez","apellidoMaterno":"Mendoza"},"idPedido":"61761ee91a768b4946d870d2","puntuacion":5,"comentarios":"La mejor experiencia de delivery que he tenido"}, IP: ::1, PATH: /crear-comentario, URL: /crear-comentario
+[2021-10-25T21:17:50.505] [INFO] mvp - POST /pedidos/crear-comentario
+[2021-10-25T21:18:13.138] [INFO] mvp - POST /pedidos/crear-comentario
+[2021-10-25T21:19:13.706] [ERROR] mvp - GET CORREO BY ID: No fue posible recuperar el correo del usuario 61749d41f9ea3da6d4c1f9 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
+[2021-10-25T21:19:13.707] [INFO] mvp - POST /pedidos/crear-comentario
+[2021-10-25T21:19:55.958] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d82d2 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
+[2021-10-25T21:21:02.169] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-25T21:21:08.145] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d82d2 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
+[2021-10-25T21:21:08.227] [INFO] mvp - POST /pedidos/crear-comentario
+[2021-10-25T21:21:13.927] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d87d2 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
+[2021-10-25T21:21:13.994] [INFO] mvp - POST /pedidos/crear-comentario
+[2021-10-25T21:21:18.231] [INFO] mvp - POST /pedidos/crear-comentario

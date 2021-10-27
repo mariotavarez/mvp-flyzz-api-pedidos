@@ -1,13 +1,5 @@
-[2021-10-25T21:16:43.619] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-25T21:17:50.494] [WARN] mvp - TOKEN VACÍO: Request /pedidos/crear-comentario Payload: {"usuario":{"idUsuario":"61749d41f9ea3da6d4c1f9ec","nombres":"Mario Josue","apellidoPaterno":"Tavarez","apellidoMaterno":"Mendoza"},"idPedido":"61761ee91a768b4946d870d2","puntuacion":5,"comentarios":"La mejor experiencia de delivery que he tenido"}, IP: ::1, PATH: /crear-comentario, URL: /crear-comentario
-[2021-10-25T21:17:50.505] [INFO] mvp - POST /pedidos/crear-comentario
-[2021-10-25T21:18:13.138] [INFO] mvp - POST /pedidos/crear-comentario
-[2021-10-25T21:19:13.706] [ERROR] mvp - GET CORREO BY ID: No fue posible recuperar el correo del usuario 61749d41f9ea3da6d4c1f9 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-25T21:19:13.707] [INFO] mvp - POST /pedidos/crear-comentario
-[2021-10-25T21:19:55.958] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d82d2 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-25T21:21:02.169] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
-[2021-10-25T21:21:08.145] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d82d2 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-25T21:21:08.227] [INFO] mvp - POST /pedidos/crear-comentario
-[2021-10-25T21:21:13.927] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d87d2 debido a: TypeError: Argument passed in must be a Buffer or string of 12 bytes or a string of 24 hex characters
-[2021-10-25T21:21:13.994] [INFO] mvp - POST /pedidos/crear-comentario
-[2021-10-25T21:21:18.231] [INFO] mvp - POST /pedidos/crear-comentario
+[2021-10-26T23:06:03.942] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-26T23:06:23.172] [INFO] mvp - INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto 4201
+[2021-10-26T23:07:47.038] [ERROR] mvp - EXISTENCIA PEDIDO: No fue posible validar la existencia del pedido 61761ee91a768b4946d870d2 debido a: MongoNotConnectedError: MongoClient must be connected to perform this operation
+[2021-10-26T23:07:47.045] [INFO] mvp - PUT /pedidos/actualizar-pedido
+[2021-10-26T23:07:57.404] [INFO] mvp - PUT /pedidos/actualizar-pedido

@@ -342,8 +342,8 @@ var PedidosService = /** @class */ (function () {
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 9, 10, 11]);
-                        // Valida que el estatus entrante sea EN CAMINO o ENTREGADO
-                        if (pedido.estatus !== constants_1.ESTATUS_PEDIDO.enCamino && pedido.estatus !== constants_1.ESTATUS_PEDIDO.entregado) {
+                        // Valida que el estatus entrante sea VOLANDO A TU DOMICILIO o ENTREGADO
+                        if (pedido.estatus !== constants_1.ESTATUS_PEDIDO.volandoATuDomicilio && pedido.estatus !== constants_1.ESTATUS_PEDIDO.entregado) {
                             // Cierra la conexion de BD
                             connection.client.close();
                             // No procede el estatus si no se encuentra dentro de los permitidos

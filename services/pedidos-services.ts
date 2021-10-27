@@ -262,8 +262,8 @@ export default class PedidosService {
         // Collecion Pedidos
         const quotesCollection = database.collection(COLLECTIONS.pedidos);
         try {
-            // Valida que el estatus entrante sea EN CAMINO o ENTREGADO
-            if (pedido.estatus !== ESTATUS_PEDIDO.enCamino && pedido.estatus !== ESTATUS_PEDIDO.entregado) {
+            // Valida que el estatus entrante sea VOLANDO A TU DOMICILIO o ENTREGADO
+            if (pedido.estatus !== ESTATUS_PEDIDO.volandoATuDomicilio && pedido.estatus !== ESTATUS_PEDIDO.entregado) {
                 // Cierra la conexion de BD
                 connection.client.close();
                 // No procede el estatus si no se encuentra dentro de los permitidos

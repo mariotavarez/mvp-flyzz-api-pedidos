@@ -11,7 +11,7 @@ export const ASUNTOS_CORREO = {
 // Estatus de pedido
 export const ESTATUS_PEDIDO = {
     enProceso: 'EN PROCESO',
-    enCamino: 'EN CAMINO',
+    volandoATuDomicilio: 'VOLANDO A TU DOMICILIO',
     cancelado: 'CANCELADO',
     entregado: 'ENTREGADO'
 };

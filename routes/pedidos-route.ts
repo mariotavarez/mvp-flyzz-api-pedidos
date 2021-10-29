@@ -22,6 +22,8 @@ pedidosRouter.put('/actualizar-pedido', token.validateToken, pedidosController.a
 pedidosRouter.get('/estatus-pedido/:idPedido', token.validateToken, pedidosController.getEstatusPedidoById);
 // Historial de movimientos por id usuario
 pedidosRouter.get('/historial-movimientos/:idUsuario', token.validateToken, pedidosController.getHistorialMovimientosByUsuario);
+// Devuelve el listado de comentarios asociados a los pedidos
+pedidosRouter.get('/comentarios', token.validateToken, pedidosController.getComentarios);
 // Crea el comentario del usuario en base a la experiencia del pedido
 pedidosRouter.post('/crear-comentario', token.validateToken, pedidosController.crearComentarioPedido);
 

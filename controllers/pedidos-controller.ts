@@ -98,6 +98,23 @@ export default class PedidosController {
 
     /**
     * @author Mario Tavarez
+    * @date 28/10/2021
+    * @description Devuelve el listado de comentarios asociados a los pedidos
+    * @param req 
+    * @param res 
+    */
+    public async getComentarios(req: Request, res: Response) {
+        // Inicializa el servicio de pedidos
+        const pedidosService = new PedidosService();
+        // Obtiene la respuesta de devolucion de comentarios
+        const responseComentarios = await pedidosService.getComentarios(req, res);
+        // Obtiene la respuesta de devolucion de comentarios
+        return responseComentarios;
+
+    }
+
+    /**
+    * @author Mario Tavarez
     * @date 24/10/2021
     * @description Crea el comentario del usuario en base a la experiencia del pedido
     * @param req 

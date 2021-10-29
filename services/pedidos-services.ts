@@ -346,6 +346,43 @@ export default class PedidosService {
         }
 
     }
+    /**
+     * @author Mario Tavarez
+     * @date 28/10/2021
+     * @description Devuelve el listado de comentarios de los usuarios
+     * @param req 
+     * @param res 
+     */
+    public async getComentarios(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Crea la conection con BD
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion Comentarios
+        const quotesCollection = database.collection(COLLECTIONS.comentariosPedidos);
+        try {
+            // Valida si devuelve los comentarios de los pedidos
+            const comentarios: Collection<any> | any = await quotesCollection.find({}).toArray();
+            // Valida si encuentra los comentarios
+            if (comentarios) {
+                res.status(200).send({ status: 'OK', comentarios: comentarios });
+            } else {
+                res.status(200).send({ status: 'OK', comentarios: [] })
+            }
+        } catch (error) {
+            res.status(500).send({ status: 'NOK', message: `No fue posible devolver el listado de comentarios de los pedidos` });
+            logger.error(`GET COMENTARIOS: No fue poisible devolver el listado de comentarios debido a: ${error}`);
+        } finally {
+            connection.client.close();
+        }
+
+    }
 
     /**
      * @author Mario Tavarez

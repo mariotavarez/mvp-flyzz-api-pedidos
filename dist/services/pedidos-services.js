@@ -448,6 +448,56 @@ var PedidosService = /** @class */ (function () {
     };
     /**
      * @author Mario Tavarez
+     * @date 28/10/2021
+     * @description Devuelve el listado de comentarios de los usuarios
+     * @param req
+     * @param res
+     */
+    PedidosService.prototype.getComentarios = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, connection, database, quotesCollection, comentarios, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_2.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.comentariosPedidos);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, 5, 6]);
+                        return [4 /*yield*/, quotesCollection.find({}).toArray()];
+                    case 3:
+                        comentarios = _a.sent();
+                        // Valida si encuentra los comentarios
+                        if (comentarios) {
+                            res.status(200).send({ status: 'OK', comentarios: comentarios });
+                        }
+                        else {
+                            res.status(200).send({ status: 'OK', comentarios: [] });
+                        }
+                        return [3 /*break*/, 6];
+                    case 4:
+                        error_7 = _a.sent();
+                        res.status(500).send({ status: 'NOK', message: "No fue posible devolver el listado de comentarios de los pedidos" });
+                        logger.error("GET COMENTARIOS: No fue poisible devolver el listado de comentarios debido a: " + error_7);
+                        return [3 /*break*/, 6];
+                    case 5:
+                        connection.client.close();
+                        return [7 /*endfinally*/];
+                    case 6: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * @author Mario Tavarez
      * @date 24/10/2021
      * @description Crea el comentario del usuario en base a la experiencia del pedido
      * @param req
@@ -455,7 +505,7 @@ var PedidosService = /** @class */ (function () {
      */
     PedidosService.prototype.crearComentarioPedido = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var logServer, logger, comentariosPedido, connection, database, quotesCollection, datosPedido, usuariosService, usuario, error_7;
+            var logServer, logger, comentariosPedido, connection, database, quotesCollection, datosPedido, usuariosService, usuario, error_8;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -497,9 +547,9 @@ var PedidosService = /** @class */ (function () {
                         _a.label = 7;
                     case 7: return [3 /*break*/, 10];
                     case 8:
-                        error_7 = _a.sent();
+                        error_8 = _a.sent();
                         res.status(500).send({ status: 'NOK', message: "No fue posible crear su comentario debido a que ocurri\u00F3 un error inesperado" });
-                        logger.error("CREAR COMENTARIO PEDIDO: No fue posible crear el comentario del usuario " + comentariosPedido.usuario.idUsuario + " debido a: " + error_7);
+                        logger.error("CREAR COMENTARIO PEDIDO: No fue posible crear el comentario del usuario " + comentariosPedido.usuario.idUsuario + " debido a: " + error_8);
                         return [3 /*break*/, 10];
                     case 9:
                         connection.client.close();

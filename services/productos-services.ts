@@ -58,7 +58,7 @@ export default class ProductosService {
      * @param req 
      * @param res 
      */
-    public async getProductosByCategoria(req: Request ,res: Response) {
+    public async getProductosByCategoria(req: Request, res: Response) {
         // Crea la instancia de Servidor de Log
         const logServer = new LogServer();
         // Obtiene la configuracion del log MVP
@@ -70,16 +70,16 @@ export default class ProductosService {
         // Database
         const database = connection.client.db(DATABASE.dbName);
         // Id Categoria
-        const {idCategoria} = req.params;
+        const { idCategoria } = req.params;
         // Collecion
         const quotesCollection = database.collection(COLLECTIONS.productos);
         // Devuelve todos los productos disponibles
-        const productos: Collection<any> | any = await quotesCollection.find({idCategoria: idCategoria}).toArray();
+        const productos: Collection<any> | any = await quotesCollection.find({ idCategoria: idCategoria }).toArray();
         try {
             // Valida si existen productos registrados
             if (productos) {
                 // Valida si devuelve productos
-                if ( productos.length > 0) { 
+                if (productos.length > 0) {
                     res.status(200).send({ status: 'OK', productos });
                 } else {
                     res.status(404).send({ status: 'OK', message: 'No existen productos asociados a esta categoría' });
@@ -94,6 +94,36 @@ export default class ProductosService {
         } finally {
             connection.client.close();
         }
+    }
+    /**
+     * @author Mario Tavarez
+     * @date 18/07/2021
+     * @description Devuelve los productos por id
+     * @param idProducto 
+     */
+    public async getProductoById(idProducto: string) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Inicializa el objeto de BD de MongoDB
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion
+        const quotesCollection = database.collection(COLLECTIONS.productos);
+        let producto: Collection<any> | any = null;
+        try {
+            // Devuelve todos los productos disponibles
+            producto = await quotesCollection.find({ _id: new Object(idProducto) }).toArray();
+
+        } catch (error) {
+            logger.error(`DEVOLUCION DE PRODUCTO POR ID: No fue posible devolver el producto debido a: ${error}`);
+        }
+
+        return producto;
     }
 }
 

@@ -148,6 +148,46 @@ var ProductosService = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @author Mario Tavarez
+     * @date 18/07/2021
+     * @description Devuelve los productos por id
+     * @param idProducto
+     */
+    ProductosService.prototype.getProductoById = function (idProducto) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logServer, logger, connection, database, quotesCollection, producto, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        logServer = new logServer_1.default();
+                        logger = logServer.getLogConfigMVP();
+                        connection = new connection_1.default();
+                        // Espera a que conecte la BD
+                        return [4 /*yield*/, connection.connectToDB()];
+                    case 1:
+                        // Espera a que conecte la BD
+                        _a.sent();
+                        database = connection.client.db(enviroment_1.DATABASE.dbName);
+                        quotesCollection = database.collection(enviroment_1.COLLECTIONS.productos);
+                        producto = null;
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, quotesCollection.find({ _id: new Object(idProducto) }).toArray()];
+                    case 3:
+                        // Devuelve todos los productos disponibles
+                        producto = _a.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        error_1 = _a.sent();
+                        logger.error("DEVOLUCION DE PRODUCTO POR ID: No fue posible devolver el producto debido a: " + error_1);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/, producto];
+                }
+            });
+        });
+    };
     return ProductosService;
 }());
 exports.default = ProductosService;

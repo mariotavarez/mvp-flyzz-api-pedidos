@@ -40,7 +40,7 @@ server.app.use(bodyParser.urlencoded({
   extended: true
 }));
 // Cors
-server.app.use(cors({ credentials: false, origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE'] }));
+server.app.use(cors({ credentials: false, origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT'] }));
 
 // Autenticacion Routes
 server.app.use('/autenticacion', autenticacionRouter);

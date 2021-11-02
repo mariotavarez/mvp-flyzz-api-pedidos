@@ -43,7 +43,7 @@ server.app.use(body_parser_1.default.urlencoded({
     extended: true
 }));
 // Cors
-server.app.use(cors_1.default({ credentials: false, origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE'] }));
+server.app.use(cors_1.default({ credentials: false, origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT'] }));
 // Autenticacion Routes
 server.app.use('/autenticacion', autenticacion_route_1.default);
 // Usuarios Routes

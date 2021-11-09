@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SALTROUNDS = exports.TOKEN = exports.COLLECTIONS_CONTROL = exports.COLLECTIONS = exports.EMAIL_CONFIG = exports.DATABASE_CONTROL = exports.DATABASE = exports.SERVER_PORT = void 0;
+exports.SALTROUNDS = exports.TOKEN = exports.COLLECTIONS_CONTROL = exports.COLLECTIONS = exports.EMAIL_CONFIG = exports.DATABASE_CONTROL = exports.DATABASE = exports.SSL_SERVER_PORT = exports.SERVER_PORT = void 0;
 // SERVER PORT
 exports.SERVER_PORT = 4201;
+// SSL SERVER PORT
+exports.SSL_SERVER_PORT = 3443;
 // DATABASE CONFIG
 exports.DATABASE = {
     url: 'mongodb+srv://admin-flyzz:flyzzmvp2021@cluster0.pj7fl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',

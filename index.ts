@@ -1,7 +1,11 @@
 // Server
 import Server from "./classes/server";
 // Enviroment
-import { SERVER_PORT } from "./global/enviroment";
+import { SERVER_PORT, SSL_SERVER_PORT } from "./global/enviroment";
+// HTTPS
+import https from 'https';
+// File System
+import fs from 'fs';
 // Routes
 import autenticacionRouter from "./routes/autenticacion-route";
 import usuariosRouter from "./routes/usuarios-route";
@@ -23,6 +27,7 @@ import LogServer from "./classes/logServer";
 import { Logger } from "log4js";
 // Log4js
 import log4js from 'log4js';
+import path from 'path';
 // Server
 const server = new Server();
 // Inicializa el middleware de autenticacion del Token
@@ -59,10 +64,18 @@ server.app.use('/control/usuarios', usuariosControlRouter);
 // Usuarios de control
 server.app.use('/control/autenticacion', autenticacionControlRouter);
 
+const sslServer = https.createServer({
+  key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+}, server.app);
+
 
 // Inicio de servidor
 server.start(() => {
   logger.info(`INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`);
   console.log(`MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`)
 });
+
+sslServer.listen(SSL_SERVER_PORT, () => console.log('SERVIDOR SSL Corriendo'));
+
 

@@ -130,4 +130,21 @@ export default class PedidosController {
 
     }
 
+    /**
+      * @author Mario Tavarez
+      * @date 08/11/2021
+      * @description Devuelve las configuraciones del sistema
+      * @param req 
+      * @param res 
+      */
+    public async getConfiguraciones(req: Request, res: Response) {
+        // Inicializa el servicio de pedidos
+        const pedidosService = new PedidosService();
+        // Obtiene la respuesta de las configuraciones del sistema
+        const responseConfiguraciones = await pedidosService.getConfiguraciones(req, res);
+        // Devuelve la respuesta para devolver las configuraciones del sistema
+        return responseConfiguraciones;
+
+    }
+
 }

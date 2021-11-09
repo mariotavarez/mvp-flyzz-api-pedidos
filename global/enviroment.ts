@@ -32,7 +32,8 @@ export const COLLECTIONS = {
     pedidos: 'pedidos',
     historialUsuarios: 'historial-usuarios',
     banners: 'banners',
-    comentariosPedidos: 'comentarios-pedidos'
+    comentariosPedidos: 'comentarios-pedidos',
+    configuraciones: 'configuraciones'
 };
 // COLLECTIONS CONTROL
 export const COLLECTIONS_CONTROL = {

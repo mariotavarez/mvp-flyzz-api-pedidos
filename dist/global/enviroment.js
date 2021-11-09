@@ -33,7 +33,8 @@ exports.COLLECTIONS = {
     pedidos: 'pedidos',
     historialUsuarios: 'historial-usuarios',
     banners: 'banners',
-    comentariosPedidos: 'comentarios-pedidos'
+    comentariosPedidos: 'comentarios-pedidos',
+    configuraciones: 'configuraciones'
 };
 // COLLECTIONS CONTROL
 exports.COLLECTIONS_CONTROL = {

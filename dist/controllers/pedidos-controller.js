@@ -208,6 +208,29 @@ var PedidosController = /** @class */ (function () {
             });
         });
     };
+    /**
+      * @author Mario Tavarez
+      * @date 08/11/2021
+      * @description Devuelve las configuraciones del sistema
+      * @param req
+      * @param res
+      */
+    PedidosController.prototype.getConfiguraciones = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var pedidosService, responseConfiguraciones;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pedidosService = new pedidos_services_1.default();
+                        return [4 /*yield*/, pedidosService.getConfiguraciones(req, res)];
+                    case 1:
+                        responseConfiguraciones = _a.sent();
+                        // Devuelve la respuesta para devolver las configuraciones del sistema
+                        return [2 /*return*/, responseConfiguraciones];
+                }
+            });
+        });
+    };
     return PedidosController;
 }());
 exports.default = PedidosController;

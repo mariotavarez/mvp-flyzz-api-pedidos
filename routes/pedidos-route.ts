@@ -26,5 +26,7 @@ pedidosRouter.get('/historial-movimientos/:idUsuario', token.validateToken, pedi
 pedidosRouter.get('/comentarios', token.validateToken, pedidosController.getComentarios);
 // Crea el comentario del usuario en base a la experiencia del pedido
 pedidosRouter.post('/crear-comentario', token.validateToken, pedidosController.crearComentarioPedido);
+// Devuelve las configuraciones del sistema
+pedidosRouter.get('/configuraciones', token.validateToken, pedidosController.getConfiguraciones);
 
 export default pedidosRouter;

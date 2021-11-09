@@ -381,7 +381,6 @@ export default class PedidosService {
         } finally {
             connection.client.close();
         }
-
     }
 
     /**
@@ -432,5 +431,43 @@ export default class PedidosService {
         } finally {
             connection.client.close();
         }
+    }
+
+    /**
+     * @author Mario Tavarez
+     * @date 08/11/2021
+     * @description Devuelve las configuraciones del sistema
+     * @param req 
+     * @param res 
+     */
+    public async getConfiguraciones(req: Request, res: Response) {
+        // Crea la instancia de Servidor de Log
+        const logServer = new LogServer();
+        // Obtiene la configuracion del log MVP
+        const logger: Logger = logServer.getLogConfigMVP();
+        // Crea la conection con BD
+        const connection = new Connection();
+        // Espera a que conecte la BD
+        await connection.connectToDB();
+        // Database
+        const database = connection.client.db(DATABASE.dbName);
+        // Collecion Configuraciones
+        const quotesCollection = database.collection(COLLECTIONS.configuraciones);
+        try {
+            // Valida si devuelve las configuraciones del API FLYZZ
+            const configuraciones: Collection<any> | any = await quotesCollection.find({}).toArray();
+            // Valida si encuentra las configuraciones
+            if (configuraciones) {
+                res.status(200).send({ status: 'OK', configuraciones: configuraciones });
+            } else {
+                res.status(200).send({ status: 'NOK', message: 'No fue posible devolver las configuraciones' })
+            }
+        } catch (error) {
+            res.status(500).send({ status: 'NOK', message: `No fue posible devolver las configuraciones` });
+            logger.error(`GET CONFIGURACIONES: No fue poisible devolver las configuraciones debido a: ${error}`);
+        } finally {
+            connection.client.close();
+        }
+
     }
 }

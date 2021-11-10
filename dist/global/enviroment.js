@@ -4,7 +4,7 @@ exports.SALTROUNDS = exports.TOKEN = exports.COLLECTIONS_CONTROL = exports.COLLE
 // SERVER PORT
 exports.SERVER_PORT = 4201;
 // SSL SERVER PORT
-exports.SSL_SERVER_PORT = 443;
+exports.SSL_SERVER_PORT = 3443;
 // DATABASE CONFIG
 exports.DATABASE = {
     url: 'mongodb+srv://admin-flyzz:flyzzmvp2021@cluster0.pj7fl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',

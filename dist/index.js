@@ -30,7 +30,6 @@ var token_1 = __importDefault(require("./middlewares/token"));
 var logServer_1 = __importDefault(require("./classes/logServer"));
 // Log4js
 var log4js_1 = __importDefault(require("log4js"));
-var path_1 = __importDefault(require("path"));
 // Server
 var server = new server_1.default();
 // Inicializa el middleware de autenticacion del Token
@@ -65,13 +64,21 @@ server.app.use('/banners', token.validateToken, banners_route_1.default);
 server.app.use('/control/usuarios', usuarios_control_route_1.default);
 // Usuarios de control
 server.app.use('/control/autenticacion', autenticacion_control_route_1.default);
-var sslServer = https_1.default.createServer({
-    key: fs_1.default.readFileSync(path_1.default.join(__dirname, 'cert', 'key.pem')),
-    cert: fs_1.default.readFileSync(path_1.default.join(__dirname, 'cert', 'cert.pem'))
-}, server.app);
+var privateKey = fs_1.default.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
+var certificate = fs_1.default.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
+var ca = fs_1.default.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');
+var credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+};
+var httpsServer = https_1.default.createServer(credentials, server.app);
 // Inicio de servidor
 server.start(function () {
     logger.info("INICIO SERVIDOR: MVP FLYZZ Corriendo en el puerto " + enviroment_1.SERVER_PORT);
     console.log("MVP FLYZZ Corriendo en el puerto " + enviroment_1.SERVER_PORT);
 });
-sslServer.listen(enviroment_1.SSL_SERVER_PORT, function () { return console.log('SERVIDOR SSL Corriendo'); });
+// Inicio de servidor HTTPS
+httpsServer.listen(enviroment_1.SSL_SERVER_PORT, function () {
+    console.log("MVP FLYZZ HTTPS Corriendo en el puerto " + enviroment_1.SSL_SERVER_PORT);
+});

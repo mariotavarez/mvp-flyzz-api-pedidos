@@ -64,10 +64,16 @@ server.app.use('/control/usuarios', usuariosControlRouter);
 // Usuarios de control
 server.app.use('/control/autenticacion', autenticacionControlRouter);
 
-const sslServer = https.createServer({
-  key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-}, server.app);
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca
+};
+const httpsServer = https.createServer(credentials, server.app);
 
 
 // Inicio de servidor
@@ -76,6 +82,8 @@ server.start(() => {
   console.log(`MVP FLYZZ Corriendo en el puerto ${SERVER_PORT}`)
 });
 
-sslServer.listen(SSL_SERVER_PORT, () => console.log('SERVIDOR SSL Corriendo'));
-
+// Inicio de servidor HTTPS
+httpsServer.listen(SSL_SERVER_PORT, () => {
+  console.log(`MVP FLYZZ HTTPS Corriendo en el puerto ${SSL_SERVER_PORT}`);
+});
 

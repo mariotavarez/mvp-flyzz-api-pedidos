@@ -64,9 +64,9 @@ server.app.use('/banners', token.validateToken, banners_route_1.default);
 server.app.use('/control/usuarios', usuarios_control_route_1.default);
 // Usuarios de control
 server.app.use('/control/autenticacion', autenticacion_control_route_1.default);
-var privateKey = fs_1.default.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
-var certificate = fs_1.default.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
-var ca = fs_1.default.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');
+var privateKey = fs_1.default.readFileSync('/etc/letsencrypt/live/flyzz.info/privkey.pem', 'utf8');
+var certificate = fs_1.default.readFileSync('/etc/letsencrypt/live/flyzz.info/cert.pem', 'utf8');
+var ca = fs_1.default.readFileSync('/etc/letsencrypt/live/flyzz.info/chain.pem', 'utf8');
 var credentials = {
     key: privateKey,
     cert: certificate,

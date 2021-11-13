@@ -590,7 +590,7 @@ var PedidosService = /** @class */ (function () {
                         configuraciones = _a.sent();
                         // Valida si encuentra las configuraciones
                         if (configuraciones) {
-                            res.status(200).send({ status: 'OK', configuraciones: configuraciones });
+                            res.status(200).send({ status: 'OK', configuraciones: configuraciones[0] });
                         }
                         else {
                             res.status(200).send({ status: 'NOK', message: 'No fue posible devolver las configuraciones' });

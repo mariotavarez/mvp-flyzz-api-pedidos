@@ -458,7 +458,7 @@ export default class PedidosService {
             const configuraciones: Collection<any> | any = await quotesCollection.find({}).toArray();
             // Valida si encuentra las configuraciones
             if (configuraciones) {
-                res.status(200).send({ status: 'OK', configuraciones: configuraciones });
+                res.status(200).send({ status: 'OK', configuraciones: configuraciones[0] });
             } else {
                 res.status(200).send({ status: 'NOK', message: 'No fue posible devolver las configuraciones' })
             }
